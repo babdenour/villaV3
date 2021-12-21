@@ -22,8 +22,8 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-
-  &__container {}
+  position: absolute;
+  top: 20%;
 
   &__scroll_top {
     text-align: right;
@@ -33,6 +33,7 @@
     cursor: pointer;
   }
 }
+
 </style>
 
 <script>
@@ -44,21 +45,34 @@ import dataImages from '../data/dataImages';
 let xDown = null;
 let yDown = null;
 
-const increaseFloor = () => {
+const increase = () => {
+  // #TODO algo with time
   const { currentFloor } = store.state;
-  let floor = currentFloor;
-  floor += 1;
-  if (floor <= 4) {
-    store.dispatch('setCurrentFloor', floor);
+  const { currentTime } = store.state;
+  const floor = currentFloor;
+  let time = currentTime;
+
+  if (floor) {
+    time += 1;
+    if (time <= 4) {
+      store.dispatch('setCurrentFloor', time);
+    }
   }
 };
 
 const dicrease = () => {
+  // #TODO algo with time
+
   const { currentFloor } = store.state;
-  let floor = currentFloor;
-  floor -= 1;
-  if (floor >= 0) {
-    store.dispatch('setCurrentFloor', floor);
+  const { currentTime } = store.state;
+  const floor = currentFloor;
+  let time = currentTime;
+
+  if (floor) {
+    time -= 1;
+    if (time >= 0) {
+      store.dispatch('setCurrentFloor', time);
+    }
   }
 };
 
@@ -89,19 +103,15 @@ function handleTouchMove(evt) {
     /* most significant */
     if (xDiff > 0) {
       /* left swipe */
-      increaseFloor();
-      console.log('left');
+      increase();
     } else {
       /* right swipe */
       dicrease();
-      console.log('right');
     }
   } else if (yDiff > 0) {
     /* up swipe */
-    console.log('up');
   } else {
     /* down swipe */
-    console.log('down');
   }
   /* reset values */
   xDown = null;
@@ -123,12 +133,6 @@ export default {
       watchedTime: 0,
     };
   },
-  created() {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  unmounted() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
   computed: {
     floor() {
       return store.getters.getCurrentFloor;
@@ -145,9 +149,6 @@ export default {
     time: 'displayImgList',
   },
   methods: {
-    handleScroll(event) {
-      console.log(event.type);
-    },
     randomItem(items) {
       return items[Math.floor(Math.random() * items.length)];
     },
@@ -180,6 +181,7 @@ export default {
     },
 
     displayImgListBySwipe: () => {
+      console.log('ici');
       const { currentFloor } = store.state;
       const { limL } = store.state.currentTime;
       // const { swipeFloorIndex } = store.state;

@@ -1,14 +1,14 @@
 <template>
   <div class="menu">
-    <h1 @click="resetAll(), activeNav = 0">villa theoreme</h1>
+    <h1 @click="resetAll(), activeNav = -1" :class="-1 === activeNav ?  'isActive' : ''">villa theoreme</h1>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(0), activeNav = 0">GF |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(1), activeNav = 0">1st F |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(2), activeNav = 0">2nd F |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(2.5), activeNav = 0">2nd 1/2 F |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(3), activeNav = 0">3rd F |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(4), activeNav = 0">4th F</div>
+        <div class="menu__nav__nav_btn__button" @click="switchFloor(0), activeNav = 0" :class="0 === activeNav ?  'isActive' : ''">GF |</div>
+        <div class="menu__nav__nav_btn__button" @click="switchFloor(1), activeNav = 1" :class="1 === activeNav ?  'isActive' : ''">1st F |</div>
+        <div class="menu__nav__nav_btn__button" @click="switchFloor(2), activeNav = 2" :class="2 === activeNav ?  'isActive' : ''">2nd F |</div>
+        <div class="menu__nav__nav_btn__button" @click="switchFloor(2.5), activeNav = 2.5" :class="2.5 === activeNav ?  'isActive' : ''">2nd 1/2 F |</div>
+        <div class="menu__nav__nav_btn__button" @click="switchFloor(3), activeNav = 3" :class="3 === activeNav ?  'isActive' : ''">3rd F |</div>
+        <div class="menu__nav__nav_btn__button" @click="switchFloor(4), activeNav = 4" :class="4 === activeNav ?  'isActive' : ''">4th F</div>
       </div>
       <div class="menu__nav__nav_btn">
         <div class="menu__nav__nav_btn__button is" @click="switchTime(600, 1200), activeNav = 600" :class="600 === activeNav ?  'isActive' : ''" >morning |</div>
@@ -52,7 +52,7 @@ body {
 
 .menu {
   position: fixed;
-  top: 0;
+  bottom: 0;
   width: 100%;
   z-index: 2;
 
@@ -76,6 +76,7 @@ body {
 }
 
 .isActive {
+  width: fit-content;
   background-color: yellow;
 }
 
@@ -96,7 +97,7 @@ export default {
   data() {
     return {
       limL: store.getters.getCurrentTime.limL,
-      activeNav: 0,
+      activeNav: -1,
     };
   },
 
