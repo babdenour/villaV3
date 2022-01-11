@@ -1,14 +1,15 @@
 <template>
-  <div class="home" >
-    <div class="home__container" v-for="i in list" :key="i.index">
-      <ShowContent
-        :name="i.name"
-        :path="i.path"
-        :floorLocation="i.floorLocation"
-        :time="i.time"
-        :desc="i.desc"
-      />
-    </div>
+<div id="top"></div>
+  <div class="home snapping">
+      <div class="home__container" v-for="i in list" :key="i.index">
+        <ShowContent
+          :name="i.name"
+          :path="i.path"
+          :floorLocation="i.floorLocation"
+          :time="i.time"
+          :desc="i.desc"
+        />
+      </div>
     <div class="home__scroll_top" @click="scrollTop()">
       go top
     </div>
@@ -21,9 +22,15 @@
 .home {
   z-index: 1;
   width: 100%;
-  height: 100%;
+  height: 80%;
   position: absolute;
   top: 20%;
+
+  &__container {
+    display: flex;
+    scroll-snap-align: start;
+
+  }
 
   &__scroll_top {
     text-align: right;
@@ -33,7 +40,13 @@
     cursor: pointer;
   }
 }
-
+.home::-webkit-scrollbar {
+  display:none;
+}
+.snapping {
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
 </style>
 
 <script>
@@ -200,8 +213,9 @@ export default {
         });
       }
     },
+    // TODO issue on go to top in html
     scrollTop: () => {
-      document.querySelector('.home').scrollIntoView({
+      document.querySelector('#top').scrollIntoView({
         behavior: 'smooth',
       });
     },

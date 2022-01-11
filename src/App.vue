@@ -25,7 +25,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
 
 html {
-  scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 body {
@@ -52,7 +52,7 @@ body {
 
 .menu {
   position: fixed;
-  bottom: 0;
+  top: 0;
   width: 100%;
   z-index: 2;
 
