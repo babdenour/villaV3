@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <h1 @click="resetAll(), activeNav = -1" :class="-1 === activeNav ?  'isActive' : ''">villa theoreme</h1>
+    <h1 class="menu__title" @click="resetAll(), activeNav = -1" :class="-1 === activeNav ?  'isActive' : ''">villa theoreme</h1>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
         <div class="menu__nav__nav_btn__button" @click="switchFloor(0), activeNav = 0" :class="0 === activeNav ?  'isActive' : ''">GF |</div>
@@ -55,6 +55,25 @@ body {
   top: 0;
   width: 100%;
   z-index: 2;
+
+  &__title {
+    -webkit-animation: rotation 5s linear infinite;
+    -moz-animation: rotation 5s linear infinite;
+    -ms-animation: rotation 5s linear infinite;
+
+    @-webkit-keyframes rotation {
+      0%   { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotateY(360deg); }
+    }
+    @-moz-keyframes rotation {
+      0%   { -moz-transform: rotate(0deg); }
+      100% { -moz-transform: rotateY(360deg); }
+    }
+    @-ms-keyframes rotation {
+      0%   { -ms-transform: rotate(0deg); }
+      100% { -ms-transform: rotateY(360deg); }
+    }
+  }
 
   &__nav {
     background-color: white;
