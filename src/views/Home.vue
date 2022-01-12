@@ -1,15 +1,15 @@
 <template>
-<div id="top"></div>
   <div class="home snapping">
-      <div class="home__container" v-for="i in list" :key="i.index">
-        <ShowContent
-          :name="i.name"
-          :path="i.path"
-          :floorLocation="i.floorLocation"
-          :time="i.time"
-          :desc="i.desc"
-        />
-      </div>
+    <div id="top"></div>
+    <div class="home__container" v-for="i in list" :key="i.index">
+      <ShowContent
+        :name="i.name"
+        :path="i.path"
+        :floorLocation="i.floorLocation"
+        :time="i.time"
+        :desc="i.desc"
+      />
+    </div>
     <div class="home__scroll_top" @click="scrollTop()">
       go top
     </div>
@@ -213,11 +213,10 @@ export default {
         });
       }
     },
-    // TODO issue on go to top in html
     scrollTop: () => {
-      document.querySelector('#top').scrollIntoView({
-        behavior: 'smooth',
-      });
+      document.querySelector('#top').scrollIntoView(
+        { behavior: 'smooth' },
+      );
     },
   },
 };
