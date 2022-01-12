@@ -57,21 +57,11 @@ body {
   z-index: 2;
 
   &__title {
-    -webkit-animation: rotation 5s linear infinite;
-    -moz-animation: rotation 5s linear infinite;
-    -ms-animation: rotation 5s linear infinite;
+    animation: rotation 5s linear infinite;
 
-    @-webkit-keyframes rotation {
+    @keyframes rotation {
       0%   { -webkit-transform: rotate(0deg); }
       100% { -webkit-transform: rotateY(360deg); }
-    }
-    @-moz-keyframes rotation {
-      0%   { -moz-transform: rotate(0deg); }
-      100% { -moz-transform: rotateY(360deg); }
-    }
-    @-ms-keyframes rotation {
-      0%   { -ms-transform: rotate(0deg); }
-      100% { -ms-transform: rotateY(360deg); }
     }
   }
 
