@@ -1,19 +1,18 @@
 <template>
   <div class="home snapping">
     <div id="top"></div>
-    <div id="cnt" class="home__container" v-for="i in list" :key="i.index">
+    <div class="home__container" v-for="i in list" :key="i.index">
       <ShowContent
         :name="i.name"
         :path="i.path"
         :floorLocation="i.floorLocation"
         :time="i.time"
         :desc="i.desc"
-        class="ShowContent"
+        class="show_content"
       />
     </div>
     <div class="home__scroll_top" @click="scrollTop()">
       go top
-      <!-- TODO  bounce back at the bottom of the loop-->
     </div>
   </div>
 
@@ -37,7 +36,7 @@
     text-align: right;
     font-weight: bold;
     font-size: 14px;
-    margin: 1rem;
+    margin: 0.5rem;
     cursor: pointer;
   }
 }
@@ -208,8 +207,20 @@ export default {
     time: 'displayImgList',
   },
   methods: {
-    randomItem(items) {
-      return items[Math.floor(Math.random() * items.length)];
+    shuffle(array) {
+      setTimeout(() => {
+        console.log(array);
+
+        if (array === null) return array;
+        let i = array.length;
+        // eslint-disable-next-line no-plusplus
+        while (i--) {
+          const ri = Math.floor(Math.random() * i);
+          // eslint-disable-next-line no-param-reassign
+          [array[i], array[ri]] = [array[ri], array[i]];
+        }
+        return array;
+      }, 3600);
     },
 
     displayImgList: () => {
@@ -227,6 +238,8 @@ export default {
           if (limL <= parseInt(el.desc, 10) && parseInt(el.desc, 10) < limH) {
             result.push(el);
           }
+          console.log(this.shuffle(result));
+          console.log(this.randomItem(result));
           return null;
         });
       } else if (currentFloor !== null) {
@@ -234,6 +247,8 @@ export default {
           if (parseFloat(el.floorLocation) === parseFloat(currentFloor)) {
             result.push(el);
           }
+          console.log(this.randomItem(result));
+          console.log(this.shuffle(result));
           return null;
         });
       }
