@@ -1,17 +1,19 @@
 <template>
   <div class="home snapping">
     <div id="top"></div>
-    <div class="home__container" v-for="i in list" :key="i.index">
+    <div id="cnt" class="home__container" v-for="i in list" :key="i.index">
       <ShowContent
         :name="i.name"
         :path="i.path"
         :floorLocation="i.floorLocation"
         :time="i.time"
         :desc="i.desc"
+        class="ShowContent"
       />
     </div>
     <div class="home__scroll_top" @click="scrollTop()">
       go top
+      <!-- TODO  bounce back at the bottom of the loop-->
     </div>
   </div>
 
@@ -29,7 +31,6 @@
   &__container {
     display: flex;
     scroll-snap-align: start;
-
   }
 
   &__scroll_top {
@@ -40,9 +41,11 @@
     cursor: pointer;
   }
 }
+
 .home::-webkit-scrollbar {
   display:none;
 }
+
 .snapping {
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
@@ -58,33 +61,44 @@ import dataImages from '../data/dataImages';
 let xDown = null;
 let yDown = null;
 
-const increase = () => {
-  // #TODO algo with time
-  const { currentFloor } = store.state;
+const swipeToTime = (swipe) => {
   const { currentTime } = store.state;
-  const floor = currentFloor;
-  let time = currentTime;
+  const time = currentTime;
 
-  if (floor) {
-    time += 1;
-    if (time <= 4) {
-      store.dispatch('setCurrentFloor', time);
+  console.log(swipe);
+  if (time.limL === null) {
+    time.limL = 600; time.limH = 1200;
+    store.dispatch('setCurrentTime', time);
+  }
+
+  if (swipe === 'left') {
+    if (time.limL === 600 && time.limH === 1200) {
+      time.limL = 1200; time.limH = 1400;
+      store.dispatch('setCurrentTime', time);
+    } else if (time.limL === 1200 && time.limH === 1400) {
+      time.limL = 1400; time.limH = 2000;
+      store.dispatch('setCurrentTime', time);
+    } else if (time.limL === 1400 && time.limH === 2000) {
+      time.limL = 2000; time.limH = 5059;
+      store.dispatch('setCurrentTime', time);
+    } else if (time.limL === 2000 && time.limH === 5059) {
+      time.limL = 600; time.limH = 1200;
+      store.dispatch('setCurrentTime', time);
     }
   }
-};
-
-const dicrease = () => {
-  // #TODO algo with time
-
-  const { currentFloor } = store.state;
-  const { currentTime } = store.state;
-  const floor = currentFloor;
-  let time = currentTime;
-
-  if (floor) {
-    time -= 1;
-    if (time >= 0) {
-      store.dispatch('setCurrentFloor', time);
+  if (swipe === 'right') {
+    if (time.limL === 600 && time.limH === 1200) {
+      time.limL = 2000; time.limH = 5059;
+      store.dispatch('setCurrentTime', time);
+    } else if (time.limL === 1200 && time.limH === 1400) {
+      time.limL = 600; time.limH = 1200;
+      store.dispatch('setCurrentTime', time);
+    } else if (time.limL === 1400 && time.limH === 2000) {
+      time.limL = 1200; time.limH = 1400;
+      store.dispatch('setCurrentTime', time);
+    } else if (time.limL === 2000 && time.limH === 5059) {
+      time.limL = 1400; time.limH = 2000;
+      store.dispatch('setCurrentTime', time);
     }
   }
 };
@@ -116,10 +130,10 @@ function handleTouchMove(evt) {
     /* most significant */
     if (xDiff > 0) {
       /* left swipe */
-      increase();
+      swipeToTime('left');
     } else {
       /* right swipe */
-      dicrease();
+      swipeToTime('right');
     }
   } else if (yDiff > 0) {
     /* up swipe */
@@ -130,6 +144,38 @@ function handleTouchMove(evt) {
   xDown = null;
   yDown = null;
 }
+
+// eslint-disable-next-line no-unused-vars
+function elementInViewport2(el) {
+  if (el) {
+    let top = el.offsetTop;
+    let left = el.offsetLeft;
+    const width = el.offsetWidth;
+    const height = el.offsetHeight;
+
+    while (el.offsetParent) {
+    // eslint-disable-next-line no-param-reassign
+      el = el.offsetParent;
+      top += el.offsetTop;
+      left += el.offsetLeft;
+    }
+
+    return (
+      top < (window.pageYOffset + window.innerHeight)
+    && left < (window.pageXOffset + window.innerWidth)
+    && (top + height) > window.pageYOffset
+    && (left + width) > window.pageXOffset
+    );
+  }
+  return 0;
+}
+
+// const docs = document.getElementById('cnt');
+// const elem = document.elementFromPoint(document.window.width() / 2, document.window.height() / 2);
+
+// console.log(elem);
+
+// elementInViewport2(docs);
 
 document.addEventListener('touchstart', handleTouchStart, false);
 document.addEventListener('touchmove', handleTouchMove, false);
@@ -167,6 +213,7 @@ export default {
     },
 
     displayImgList: () => {
+      // TODO random loop of images
       const { currentFloor } = store.state;
       const { limL, limH } = store.state.currentTime;
       const result = [];
@@ -175,7 +222,7 @@ export default {
         dataImages.forEach(() => {
           result.push(dataImages[Math.floor(Math.random() * dataImages.length)]);
         });
-      } else if (limL !== null && limL !== null) {
+      } else if (limL !== null && limH !== null) {
         dataImages.find((el) => {
           if (limL <= parseInt(el.desc, 10) && parseInt(el.desc, 10) < limH) {
             result.push(el);
@@ -194,13 +241,9 @@ export default {
     },
 
     displayImgListBySwipe: () => {
-      console.log('ici');
       const { currentFloor } = store.state;
       const { limL } = store.state.currentTime;
-      // const { swipeFloorIndex } = store.state;
       const result = [];
-
-      // #TODO add the swipe index to the algo for searching when swipe active on the same floor
 
       if (currentFloor !== null && limL !== null) {
         dataImages.find((el) => {

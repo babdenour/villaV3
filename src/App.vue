@@ -1,4 +1,6 @@
 <template>
+<!-- TODO nav react by prop of image (ex: GF/moring => { css syle hightlight nav text in yellow})
+scroll > highlight floor and time of the day in the nav bar (1F,2F,3F,4F...& morning, noon, afternoon...)-->
   <div class="menu">
     <h1 class="menu__title" @click="resetAll(), activeNav = -1" :class="-1 === activeNav ?  'isActive' : ''">villa theoreme</h1>
     <div class="menu__nav">
@@ -17,6 +19,7 @@
         <div class="menu__nav__nav_btn__button is" @click="switchTime(2000, 5059), activeNav = 2000" :class="2000 === activeNav ?  'isActive' : ''" >night</div>
       </div>
     </div>
+  <!-- TODO @click  on nav -->
   </div>
   <router-view />
 </template>
@@ -41,7 +44,7 @@ body {
     url("/fonts/calibri_light.ttf") format("truetype"),
     url("/fonts/calibri_light.svg#CustomFont") format("svg");
 }
-  font-family: Calibri Light, "Roboto Mono", sans-serif, Arial;
+  font-family: "Calibri Light", "Roboto Mono", sans-serif, Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -56,14 +59,16 @@ body {
   width: 100%;
   z-index: 2;
 
-  &__title {
-    animation: rotation 5s linear infinite;
+    &__title {
+      @font-face {
+        font-family: "Albertus";
+          src: url("./assets/fonts/AlbertusMTStd.woff") format("woff"),
+          url("./assets/fonts/AlbertusMTStdItalic.woff") format("woff"),
+          url("./assets/fonts/AlbertusMTStdLight.woff") format("woff");
+      }
+      font-family: "Albertus";
 
-    @keyframes rotation {
-      0%   { -webkit-transform: rotate(0deg); }
-      100% { -webkit-transform: rotateY(360deg); }
     }
-  }
 
   &__nav {
     background-color: white;
