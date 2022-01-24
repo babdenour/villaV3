@@ -169,6 +169,19 @@ function elementInViewport2(el) {
   return 0;
 }
 
+// eslint-disable-next-line no-unused-vars
+function shuffle(array) {
+  if (array?.length) {
+    let i = array.length;
+    // eslint-disable-next-line no-plusplus
+    while (i--) {
+      const ri = Math.floor(Math.random() * i);
+      // eslint-disable-next-line no-param-reassign
+      [array[i], array[ri]] = [array[ri], array[i]];
+    }
+    return array;
+  } return [];
+}
 // const docs = document.getElementById('cnt');
 // const elem = document.elementFromPoint(document.window.width() / 2, document.window.height() / 2);
 
@@ -207,21 +220,6 @@ export default {
     time: 'displayImgList',
   },
   methods: {
-    shuffle(array) {
-      setTimeout(() => {
-        console.log(array);
-
-        if (array === null) return array;
-        let i = array.length;
-        // eslint-disable-next-line no-plusplus
-        while (i--) {
-          const ri = Math.floor(Math.random() * i);
-          // eslint-disable-next-line no-param-reassign
-          [array[i], array[ri]] = [array[ri], array[i]];
-        }
-        return array;
-      }, 3600);
-    },
 
     displayImgList: () => {
       // TODO random loop of images
@@ -238,20 +236,22 @@ export default {
           if (limL <= parseInt(el.desc, 10) && parseInt(el.desc, 10) < limH) {
             result.push(el);
           }
-          console.log(this.shuffle(result));
-          console.log(this.randomItem(result));
           return null;
         });
+        // console.log(result);
+        // result = shuffle(result);
+        // console.log(result);
       } else if (currentFloor !== null) {
         dataImages.find((el) => {
           if (parseFloat(el.floorLocation) === parseFloat(currentFloor)) {
             result.push(el);
           }
-          console.log(this.randomItem(result));
-          console.log(this.shuffle(result));
           return null;
         });
       }
+      // console.log(result);
+      // result = shuffle(result);
+      // console.log(result);
       return result;
     },
 
