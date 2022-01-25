@@ -189,6 +189,51 @@ function shuffle(array) {
 
 // elementInViewport2(docs);
 
+// var getElementsInArea = (function(docElm){
+//     var viewportHeight = docElm.clientHeight;
+
+//     return function(e, opts){
+//         var found = [], i;
+
+//         if( e && e.type == 'resize' )
+//             viewportHeight = docElm.clientHeight;
+
+//         for( i = opts.elements.length; i--; ){
+//             var elm        = opts.elements[i],
+//                 pos        = elm.getBoundingClientRect(),
+//                 topPerc    = pos.top    / viewportHeight * 100,
+//                 bottomPerc = pos.bottom / viewportHeight * 100,
+//                 middle     = (topPerc + bottomPerc)/2,
+//                 inViewport = middle > opts.zone[1] &&
+//                              middle < (100-opts.zone[1]);
+
+//             elm.classList.toggle(opts.markedClass, inViewport);
+
+//             if( inViewport )
+//                 found.push(elm);
+//         }
+//     };
+// })(document.documentElement);
+
+// ////////////////////////////////////
+// // How to use:
+
+// window.addEventListener('scroll', f)
+// window.addEventListener('resize', f)
+
+// function f(e){
+//     getElementsInArea(e, {
+//         elements    : document.querySelectorAll('div'),
+//         markedClass : 'highlight--1',
+//         zone        : [20, 20] // percentage distance from top & bottom
+//     });
+
+//     getElementsInArea(e, {
+//         elements    : document.querySelectorAll('div'),
+//         markedClass : 'highlight--2',
+//         zone        : [40, 40] // percentage distance from top & bottom
+//     });
+// }
 document.addEventListener('touchstart', handleTouchStart, false);
 document.addEventListener('touchmove', handleTouchMove, false);
 
@@ -222,37 +267,37 @@ export default {
   methods: {
 
     displayImgList: () => {
-      // TODO random loop of images
       const { currentFloor } = store.state;
       const { limL, limH } = store.state.currentTime;
       const result = [];
 
-      if (currentFloor === null && limL === null) {
+      if (currentFloor === null && (limL === null || limH === null)) {
         dataImages.forEach(() => {
           result.push(dataImages[Math.floor(Math.random() * dataImages.length)]);
         });
-      } else if (limL !== null && limH !== null) {
-        dataImages.find((el) => {
-          if (limL <= parseInt(el.desc, 10) && parseInt(el.desc, 10) < limH) {
-            result.push(el);
-          }
-          return null;
-        });
-        // console.log(result);
-        // result = shuffle(result);
-        // console.log(result);
-      } else if (currentFloor !== null) {
-        dataImages.find((el) => {
-          if (parseFloat(el.floorLocation) === parseFloat(currentFloor)) {
-            result.push(el);
-          }
-          return null;
-        });
+        return result;
       }
-      // console.log(result);
-      // result = shuffle(result);
-      // console.log(result);
-      return result;
+      if (currentFloor !== null || (limL !== null && limH !== null)) {
+        if (currentFloor !== null) {
+          // eslint-disable-next-line array-callback-return
+          dataImages.find((el) => {
+            if (parseFloat(el.floorLocation) === parseFloat(currentFloor)) {
+              result.push(el);
+            }
+          });
+          return shuffle(result);
+        }
+        if (limL !== null && limH !== null) {
+          // eslint-disable-next-line array-callback-return
+          dataImages.find((el) => {
+            if (limL <= parseInt(el.desc, 10) && parseInt(el.desc, 10) < limH) {
+              result.push(el);
+            }
+          });
+          return shuffle(result);
+        }
+      }
+      return [];
     },
 
     displayImgListBySwipe: () => {
