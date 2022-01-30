@@ -1,6 +1,6 @@
 <template>
-  <div :id="time" class="img_desc" @click="swipeTime()">
-    <img :alt="name" :src="require(`@/${path}`)" />
+  <div :id="id" class="img_desc">
+    <img :alt="'picture ' + name + 'form the ' + floorLocation + ' floor at ' + desc " :src="require(`@/${path}`)" />
     <div class="img_desc__desc stack" style="--stacks: 3;">
       <span style="--index: 0;">{{ desc }} {{ name }} {{ time }}</span>
       <span style="--index: 1;">{{ desc }} {{ name }} {{ time }}</span>
@@ -86,11 +86,15 @@ export default {
     floorLocation: String,
     time: String,
     desc: String,
+    id: String,
   },
-  methods: {
-    swipeTime: () => {
-      console.log('click swipeTime fct');
-    },
+  data() {
+    return {};
   },
+  methods: {},
 };
+
+// const element = document.getElementsByName('img_desc');
+// const rect = element.getBoundingClientRect();
+// console.log(rect);
 </script>

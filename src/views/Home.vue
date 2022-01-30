@@ -1,21 +1,20 @@
 <template>
   <div class="home snapping">
     <div id="top"></div>
-    <div class="home__container" v-for="i in list" :key="i.index">
-      <ShowContent
+    <div id="container" class="home__container">
+      <ShowContent v-for="(i, index) in list" :key="i.name"
         :name="i.name"
         :path="i.path"
         :floorLocation="i.floorLocation"
         :time="i.time"
         :desc="i.desc"
-        class="show_content"
+        :id="'show_'+index + ' ' + i.name"
       />
     </div>
     <div class="home__scroll_top" @click="scrollTop()">
       go top
     </div>
   </div>
-
 </template>
 
 <style lang="scss">
@@ -29,6 +28,7 @@
 
   &__container {
     display: flex;
+    flex-direction: column;
     scroll-snap-align: start;
   }
 
@@ -52,10 +52,146 @@
 </style>
 
 <script>
-// @ is an alias to /src
+/* eslint-disable no-plusplus */
+/* eslint-disable func-names */
+/* eslint-disable no-mixed-operators */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-sequences */
+/* eslint-disable no-unexpected-multiline */
+/* eslint-disable no-param-reassign */
+
 import ShowContent from '../components/ShowContent.vue';
 import store from '../store/index';
 import dataImages from '../data/dataImages';
+
+export default {
+  name: 'Home',
+  store,
+  components: {
+    ShowContent,
+  },
+
+  data() {
+    return {
+      watchedFloor: 0,
+      watchedTime: 0,
+    };
+  },
+  computed: {
+    floor() {
+      return store.getters.getCurrentFloor;
+    },
+    time() {
+      return store.getters.getCurrentTime;
+    },
+    list() {
+      return this.displayImgList();
+    },
+  },
+  watch: {
+    floor: 'displayImgList',
+    time: 'displayImgList',
+  },
+  methods: {
+    // shuffle: (array) => {
+    //   if (array?.length) {
+    //     let i = array.length;
+    //     while (i--) {
+    //       const ri = Math.floor(Math.random() * i);
+    //       [array[i], array[ri]] = [array[ri], array[i]];
+    //     }
+    //     return array;
+    //   } return [];
+    // },
+
+    displayImgList: () => {
+      const { currentFloor } = store.state;
+      const { limL, limH } = store.state.currentTime;
+      const result = [];
+
+      if (currentFloor === null && (limL === null || limH === null)) {
+        dataImages.forEach(() => {
+          result.push(dataImages[Math.floor(Math.random() * dataImages.length)]);
+        });
+        return result;
+      }
+      if (currentFloor !== null || (limL !== null && limH !== null)) {
+        if (currentFloor !== null) {
+          // eslint-disable-next-line array-callback-return
+          dataImages.find((el) => {
+            if (parseFloat(el.floorLocation) === parseFloat(currentFloor)) {
+              result.push(el);
+            }
+          });
+          return shuffle(result);
+        }
+        if (limL !== null && limH !== null) {
+          // eslint-disable-next-line array-callback-return
+          dataImages.find((el) => {
+            if (limL <= parseInt(el.desc, 10) && parseInt(el.desc, 10) < limH) {
+              result.push(el);
+            }
+          });
+          return shuffle(result);
+        }
+      }
+      return [];
+    },
+    scrollTop: () => {
+      document.querySelector('#top').scrollIntoView(
+        { behavior: 'smooth' },
+      );
+    },
+  },
+  mounted() {
+    // const showC1 = document.getElementsByClassName('show');
+    // const visible = (showC) => {
+    //   let i = showC.length;
+
+    //   while (i) {
+    //     // TODO toruver comment faire pour utiliser les pourcentage de viewport ds le if
+
+    //     const data = showC[0].getBoundingClientRect();
+
+    //     if (data.top >= 0 && data.bottom
+    //       <= (window.innerHeight || document.documentElement.clientHeight)) {
+    //       console.log('In the viewport!');
+    //       console.log(data, showC[0]);
+    //     } else {
+    //       console.log('Not in the viewport... whomp whomp');
+    //     }
+    //     console.log(data);
+    //     i--;
+    //   }
+    // };
+    // visible(showC1);
+  },
+};
+// TODO trouve l'element placer a la position top: 50%  bot 50%
+
+const checkVp = () => {
+  const vpHeight = window.innerHeight;
+  const halfH = vpHeight / 2;
+  console.log(`x:  ${vpHeight}, 50% ${halfH}`);
+};
+const checkEl = () => {
+  const element = document.querySelectorAll('.container');
+  // const rect = element.getBoundingClientRect();
+  console.log(element);
+};
+window.addEventListener('resize', () => {
+  checkVp();
+});
+
+// const container = document.getElementsByTagName('div');
+
+document.addEventListener('scroll', () => {
+  checkEl();
+  // console.log('scroll container', container);
+});
+
+checkEl();
+checkVp();
 
 let xDown = null;
 let yDown = null;
@@ -64,7 +200,6 @@ const swipeToTime = (swipe) => {
   const { currentTime } = store.state;
   const time = currentTime;
 
-  console.log(swipe);
   if (time.limL === null) {
     time.limL = 600; time.limH = 1200;
     store.dispatch('setCurrentTime', time);
@@ -144,183 +279,28 @@ function handleTouchMove(evt) {
   yDown = null;
 }
 
-// eslint-disable-next-line no-unused-vars
-function elementInViewport2(el) {
-  if (el) {
-    let top = el.offsetTop;
-    let left = el.offsetLeft;
-    const width = el.offsetWidth;
-    const height = el.offsetHeight;
-
-    while (el.offsetParent) {
-    // eslint-disable-next-line no-param-reassign
-      el = el.offsetParent;
-      top += el.offsetTop;
-      left += el.offsetLeft;
-    }
-
-    return (
-      top < (window.pageYOffset + window.innerHeight)
-    && left < (window.pageXOffset + window.innerWidth)
-    && (top + height) > window.pageYOffset
-    && (left + width) > window.pageXOffset
-    );
-  }
-  return 0;
-}
-
-// eslint-disable-next-line no-unused-vars
 function shuffle(array) {
   if (array?.length) {
+    const usedIncrement = [];
     let i = array.length;
-    // eslint-disable-next-line no-plusplus
+
+    let ri = Math.floor(Math.random() * i);
+    [array[i], array[ri]] = [array[ri], array[i]];
     while (i--) {
-      const ri = Math.floor(Math.random() * i);
-      // eslint-disable-next-line no-param-reassign
-      [array[i], array[ri]] = [array[ri], array[i]];
+      if (usedIncrement.indexOf(ri) !== -1) {
+        ri = Math.floor(Math.random() * i);
+        usedIncrement.push(ri);
+        // console.log('apres push', usedIncrement, ri);
+      } else {
+        usedIncrement.push(ri);
+        [array[i], array[ri]] = [array[ri], array[i]];
+        // console.log('! used', usedIncrement, ri);
+      }
     }
     return array;
   } return [];
 }
-// const docs = document.getElementById('cnt');
-// const elem = document.elementFromPoint(document.window.width() / 2, document.window.height() / 2);
 
-// console.log(elem);
-
-// elementInViewport2(docs);
-
-// var getElementsInArea = (function(docElm){
-//     var viewportHeight = docElm.clientHeight;
-
-//     return function(e, opts){
-//         var found = [], i;
-
-//         if( e && e.type == 'resize' )
-//             viewportHeight = docElm.clientHeight;
-
-//         for( i = opts.elements.length; i--; ){
-//             var elm        = opts.elements[i],
-//                 pos        = elm.getBoundingClientRect(),
-//                 topPerc    = pos.top    / viewportHeight * 100,
-//                 bottomPerc = pos.bottom / viewportHeight * 100,
-//                 middle     = (topPerc + bottomPerc)/2,
-//                 inViewport = middle > opts.zone[1] &&
-//                              middle < (100-opts.zone[1]);
-
-//             elm.classList.toggle(opts.markedClass, inViewport);
-
-//             if( inViewport )
-//                 found.push(elm);
-//         }
-//     };
-// })(document.documentElement);
-
-// ////////////////////////////////////
-// // How to use:
-
-// window.addEventListener('scroll', f)
-// window.addEventListener('resize', f)
-
-// function f(e){
-//     getElementsInArea(e, {
-//         elements    : document.querySelectorAll('div'),
-//         markedClass : 'highlight--1',
-//         zone        : [20, 20] // percentage distance from top & bottom
-//     });
-
-//     getElementsInArea(e, {
-//         elements    : document.querySelectorAll('div'),
-//         markedClass : 'highlight--2',
-//         zone        : [40, 40] // percentage distance from top & bottom
-//     });
-// }
 document.addEventListener('touchstart', handleTouchStart, false);
 document.addEventListener('touchmove', handleTouchMove, false);
-
-export default {
-  name: 'Home',
-  store,
-  components: {
-    ShowContent,
-  },
-  data() {
-    return {
-      watchedFloor: 0,
-      watchedTime: 0,
-    };
-  },
-  computed: {
-    floor() {
-      return store.getters.getCurrentFloor;
-    },
-    time() {
-      return store.getters.getCurrentTime;
-    },
-    list() {
-      return this.displayImgList();
-    },
-  },
-  watch: {
-    floor: 'displayImgList',
-    time: 'displayImgList',
-  },
-  methods: {
-
-    displayImgList: () => {
-      const { currentFloor } = store.state;
-      const { limL, limH } = store.state.currentTime;
-      const result = [];
-
-      if (currentFloor === null && (limL === null || limH === null)) {
-        dataImages.forEach(() => {
-          result.push(dataImages[Math.floor(Math.random() * dataImages.length)]);
-        });
-        return result;
-      }
-      if (currentFloor !== null || (limL !== null && limH !== null)) {
-        if (currentFloor !== null) {
-          // eslint-disable-next-line array-callback-return
-          dataImages.find((el) => {
-            if (parseFloat(el.floorLocation) === parseFloat(currentFloor)) {
-              result.push(el);
-            }
-          });
-          return shuffle(result);
-        }
-        if (limL !== null && limH !== null) {
-          // eslint-disable-next-line array-callback-return
-          dataImages.find((el) => {
-            if (limL <= parseInt(el.desc, 10) && parseInt(el.desc, 10) < limH) {
-              result.push(el);
-            }
-          });
-          return shuffle(result);
-        }
-      }
-      return [];
-    },
-
-    displayImgListBySwipe: () => {
-      const { currentFloor } = store.state;
-      const { limL } = store.state.currentTime;
-      const result = [];
-
-      if (currentFloor !== null && limL !== null) {
-        dataImages.find((el) => {
-          if (parseFloat(el.floorLocation) === parseFloat(currentFloor)) {
-            if (el.time === limL) {
-              result.push(el);
-            }
-          }
-          return null;
-        });
-      }
-    },
-    scrollTop: () => {
-      document.querySelector('#top').scrollIntoView(
-        { behavior: 'smooth' },
-      );
-    },
-  },
-};
 </script>

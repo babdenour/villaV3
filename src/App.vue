@@ -13,10 +13,10 @@ scroll > highlight floor and time of the day in the nav bar (1F,2F,3F,4F...& mor
         <div class="menu__nav__nav_btn__button" @click="switchFloor(4), activeNav = 4" :class="4 === activeNav ?  'isActive' : ''">4th F</div>
       </div>
       <div class="menu__nav__nav_btn">
-        <div class="menu__nav__nav_btn__button is" @click="switchTime(600, 1200), activeNav = 600" :class="600 === activeNav ?  'isActive' : ''" >morning |</div>
-        <div class="menu__nav__nav_btn__button is" @click="switchTime(1200, 1400), activeNav = 1200" :class="1200 === activeNav ?  'isActive' : ''" >noon |</div>
-        <div class="menu__nav__nav_btn__button is" @click="switchTime(1400, 2000), activeNav = 1400" :class="1400 === activeNav ?  'isActive' : ''" >afternoon |</div>
-        <div class="menu__nav__nav_btn__button is" @click="switchTime(2000, 5059), activeNav = 2000" :class="2000 === activeNav ?  'isActive' : ''" >night</div>
+        <div class="menu__nav__nav_btn__button" @click="switchTime(600, 1200), activeNav = 600" :class="600 === activeNav ?  'isActive' : ''" >morning |</div>
+        <div class="menu__nav__nav_btn__button" @click="switchTime(1200, 1400), activeNav = 1200" :class="1200 === activeNav ?  'isActive' : ''" >noon |</div>
+        <div class="menu__nav__nav_btn__button" @click="switchTime(1400, 2000), activeNav = 1400" :class="1400 === activeNav ?  'isActive' : ''" >afternoon |</div>
+        <div class="menu__nav__nav_btn__button" @click="switchTime(2000, 5059), activeNav = 2000" :class="2000 === activeNav ?  'isActive' : ''" >night</div>
       </div>
     </div>
   <!-- TODO @click  on nav -->
