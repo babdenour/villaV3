@@ -1,32 +1,74 @@
 <template>
-<!-- TODO nav react by prop of image (ex: GF/moring => { css syle hightlight nav text in yellow})
-scroll > highlight floor and time of the day in the nav bar (1F,2F,3F,4F...& morning, noon, afternoon...)-->
+  <!-- TODO nav react by prop of image (ex: GF/moring => { css syle hightlight nav text in yellow})
+  scroll > highlight floor and time of the day in the nav bar (1F,2F,3F,4F...& morning, noon, afternoon...)-->
   <div class="menu">
-    <h1 class="menu__title" @click="resetAll(), activeNav = -1" :class="-1 === activeNav ?  'isActive' : ''">villa theoreme</h1>
+    <h1
+      class="menu__title"
+      @click="resetAll(), activeNav = -1"
+      :class="-1 === activeNav ? 'isActive' : ''"
+    >villa theoreme</h1>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(0), activeNav = 0" :class="0 === activeNav ?  'isActive' : ''">GF |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(1), activeNav = 1" :class="1 === activeNav ?  'isActive' : ''">1st F |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(2), activeNav = 2" :class="2 === activeNav ?  'isActive' : ''">2nd F |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(2.5), activeNav = 2.5" :class="2.5 === activeNav ?  'isActive' : ''">2nd 1/2 F |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(3), activeNav = 3" :class="3 === activeNav ?  'isActive' : ''">3rd F |</div>
-        <div class="menu__nav__nav_btn__button" @click="switchFloor(4), activeNav = 4" :class="4 === activeNav ?  'isActive' : ''">4th F</div>
+        <div
+          class="menu__nav__nav_btn__button"
+          @click="switchFloor(0), activeNav = 0"
+          :class="0 === activeNav ? 'isActive' : ''"
+        >GF |</div>
+        <div
+          class="menu__nav__nav_btn__button"
+          @click="switchFloor(1), activeNav = 1"
+          :class="1 === activeNav ? 'isActive' : ''"
+        >1st F |</div>
+        <div
+          class="menu__nav__nav_btn__button"
+          @click="switchFloor(2), activeNav = 2"
+          :class="2 === activeNav ? 'isActive' : ''"
+        >2nd F |</div>
+        <div
+          class="menu__nav__nav_btn__button"
+          @click="switchFloor(2.5), activeNav = 2.5"
+          :class="2.5 === activeNav ? 'isActive' : ''"
+        >2nd 1/2 F |</div>
+        <div
+          class="menu__nav__nav_btn__button"
+          @click="switchFloor(3), activeNav = 3"
+          :class="3 === activeNav ? 'isActive' : ''"
+        >3rd F |</div>
+        <div
+          class="menu__nav__nav_btn__button"
+          @click="switchFloor(4), activeNav = 4"
+          :class="4 === activeNav ? 'isActive' : ''"
+        >4th F</div>
       </div>
       <div class="menu__nav__nav_btn">
-        <div class="menu__nav__nav_btn__button is" @click="switchTime(600, 1200), activeNav = 600" :class="600 === activeNav ?  'isActive' : ''" >morning |</div>
-        <div class="menu__nav__nav_btn__button is" @click="switchTime(1200, 1400), activeNav = 1200" :class="1200 === activeNav ?  'isActive' : ''" >noon |</div>
-        <div class="menu__nav__nav_btn__button is" @click="switchTime(1400, 2000), activeNav = 1400" :class="1400 === activeNav ?  'isActive' : ''" >afternoon |</div>
-        <div class="menu__nav__nav_btn__button is" @click="switchTime(2000, 5059), activeNav = 2000" :class="2000 === activeNav ?  'isActive' : ''" >night</div>
+        <div
+          class="menu__nav__nav_btn__button is"
+          @click="switchTime(600, 1200), activeNav = 600"
+          :class="600 === activeNav ? 'isActive' : ''"
+        >morning |</div>
+        <div
+          class="menu__nav__nav_btn__button is"
+          @click="switchTime(1200, 1400), activeNav = 1200"
+          :class="1200 === activeNav ? 'isActive' : ''"
+        >noon |</div>
+        <div
+          class="menu__nav__nav_btn__button is"
+          @click="switchTime(1400, 2000), activeNav = 1400"
+          :class="1400 === activeNav ? 'isActive' : ''"
+        >afternoon |</div>
+        <div
+          class="menu__nav__nav_btn__button is"
+          @click="switchTime(2000, 5059), activeNav = 2000"
+          :class="2000 === activeNav ? 'isActive' : ''"
+        >night</div>
       </div>
     </div>
-  <!-- TODO @click  on nav -->
+    <!-- TODO @click  on nav -->
   </div>
   <router-view />
 </template>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
-
 html {
   overflow: hidden;
 }
@@ -37,14 +79,12 @@ body {
 
 #app {
   @font-face {
-  font-family: "Calibri Light";
-  src: url("/fonts/calibri_light.eot");
-  src: url("/fonts/calibri_light.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/calibri_light.woff") format("woff"),
-    url("/fonts/calibri_light.ttf") format("truetype"),
-    url("/fonts/calibri_light.svg#CustomFont") format("svg");
-}
-  font-family: "Calibri Light", "Roboto Mono", sans-serif, Arial;
+    font-family: "Albertus";
+    src: url("./assets/fonts/AlbertusMTStd.woff") format("woff"),
+      url("./assets/fonts/AlbertusMTStdItalic.woff") format("woff"),
+      url("./assets/fonts/AlbertusMTStdLight.woff") format("woff");
+  }
+  font-family: "Albertus, sans-serif, Arial";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -59,16 +99,15 @@ body {
   width: 100%;
   z-index: 2;
 
-    &__title {
-      @font-face {
-        font-family: "Albertus";
-          src: url("./assets/fonts/AlbertusMTStd.woff") format("woff"),
-          url("./assets/fonts/AlbertusMTStdItalic.woff") format("woff"),
-          url("./assets/fonts/AlbertusMTStdLight.woff") format("woff");
-      }
+  &__title {
+    @font-face {
       font-family: "Albertus";
-
+      src: url("./assets/fonts/AlbertusMTStd.woff") format("woff"),
+        url("./assets/fonts/AlbertusMTStdItalic.woff") format("woff"),
+        url("./assets/fonts/AlbertusMTStdLight.woff") format("woff");
     }
+    font-family: "Albertus";
+  }
 
   &__nav {
     background-color: white;
@@ -82,7 +121,8 @@ body {
       &__button {
         margin-bottom: 3px;
         cursor: pointer;
-      }:active {
+      }
+      :active {
         background-color: yellow;
       }
     }

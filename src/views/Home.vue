@@ -11,15 +11,11 @@
         class="show_content"
       />
     </div>
-    <div class="home__scroll_top" @click="scrollTop()">
-      go top
-    </div>
+    <div class="home__scroll_top" @click="scrollTop()">go top</div>
   </div>
-
 </template>
 
 <style lang="scss">
-
 .home {
   z-index: 1;
   width: 100%;
@@ -42,7 +38,7 @@
 }
 
 .home::-webkit-scrollbar {
-  display:none;
+  display: none;
 }
 
 .snapping {
@@ -53,12 +49,14 @@
 
 <script>
 // @ is an alias to /src
-import ShowContent from '../components/ShowContent.vue';
-import store from '../store/index';
-import dataImages from '../data/dataImages';
+import ShowContent from "../components/ShowContent.vue";
+import store from "../store/index";
+import dataImages from "../data/dataImages";
 
 let xDown = null;
 let yDown = null;
+let lstPosition = 0;
+let posChange = false;
 
 const swipeToTime = (swipe) => {
   const { currentTime } = store.state;
@@ -66,46 +64,53 @@ const swipeToTime = (swipe) => {
 
   console.log(swipe);
   if (time.limL === null) {
-    time.limL = 600; time.limH = 1200;
-    store.dispatch('setCurrentTime', time);
+    time.limL = 600;
+    time.limH = 1200;
+    store.dispatch("setCurrentTime", time);
   }
 
-  if (swipe === 'left') {
+  if (swipe === "left") {
     if (time.limL === 600 && time.limH === 1200) {
-      time.limL = 1200; time.limH = 1400;
-      store.dispatch('setCurrentTime', time);
+      time.limL = 1200;
+      time.limH = 1400;
+      store.dispatch("setCurrentTime", time);
     } else if (time.limL === 1200 && time.limH === 1400) {
-      time.limL = 1400; time.limH = 2000;
-      store.dispatch('setCurrentTime', time);
+      time.limL = 1400;
+      time.limH = 2000;
+      store.dispatch("setCurrentTime", time);
     } else if (time.limL === 1400 && time.limH === 2000) {
-      time.limL = 2000; time.limH = 5059;
-      store.dispatch('setCurrentTime', time);
+      time.limL = 2000;
+      time.limH = 5059;
+      store.dispatch("setCurrentTime", time);
     } else if (time.limL === 2000 && time.limH === 5059) {
-      time.limL = 600; time.limH = 1200;
-      store.dispatch('setCurrentTime', time);
+      time.limL = 600;
+      time.limH = 1200;
+      store.dispatch("setCurrentTime", time);
     }
   }
-  if (swipe === 'right') {
+  if (swipe === "right") {
     if (time.limL === 600 && time.limH === 1200) {
-      time.limL = 2000; time.limH = 5059;
-      store.dispatch('setCurrentTime', time);
+      time.limL = 2000;
+      time.limH = 5059;
+      store.dispatch("setCurrentTime", time);
     } else if (time.limL === 1200 && time.limH === 1400) {
-      time.limL = 600; time.limH = 1200;
-      store.dispatch('setCurrentTime', time);
+      time.limL = 600;
+      time.limH = 1200;
+      store.dispatch("setCurrentTime", time);
     } else if (time.limL === 1400 && time.limH === 2000) {
-      time.limL = 1200; time.limH = 1400;
-      store.dispatch('setCurrentTime', time);
+      time.limL = 1200;
+      time.limH = 1400;
+      store.dispatch("setCurrentTime", time);
     } else if (time.limL === 2000 && time.limH === 5059) {
-      time.limL = 1400; time.limH = 2000;
-      store.dispatch('setCurrentTime', time);
+      time.limL = 1400;
+      time.limH = 2000;
+      store.dispatch("setCurrentTime", time);
     }
   }
 };
 
 function getTouches(evt) {
-  return (
-    evt.touches || evt.originalEvent.touches
-  );
+  return evt.touches || evt.originalEvent.touches;
 }
 
 function handleTouchStart(evt) {
@@ -129,10 +134,10 @@ function handleTouchMove(evt) {
     /* most significant */
     if (xDiff > 0) {
       /* left swipe */
-      swipeToTime('left');
+      swipeToTime("left");
     } else {
       /* right swipe */
-      swipeToTime('right');
+      swipeToTime("right");
     }
   } else if (yDiff > 0) {
     /* up swipe */
@@ -144,30 +149,30 @@ function handleTouchMove(evt) {
   yDown = null;
 }
 
-// eslint-disable-next-line no-unused-vars
-function elementInViewport2(el) {
-  if (el) {
-    let top = el.offsetTop;
-    let left = el.offsetLeft;
-    const width = el.offsetWidth;
-    const height = el.offsetHeight;
+const checkVp = (lstPosition) => {
+  const vpWidth = window.innerWidth;
+  const vpHeight = window.innerHeight;
+  const scrollY = lstPosition;
+  console.log("cvp", scrollY);
+  const x = vpWidth / 2;
+  const y = scrollY + vpHeight / 2;
+  console.log(`x:  ${x}, y ${y} `);
+  return { x, y };
+};
 
-    while (el.offsetParent) {
-    // eslint-disable-next-line no-param-reassign
-      el = el.offsetParent;
-      top += el.offsetTop;
-      left += el.offsetLeft;
-    }
-
-    return (
-      top < (window.pageYOffset + window.innerHeight)
-    && left < (window.pageXOffset + window.innerWidth)
-    && (top + height) > window.pageYOffset
-    && (left + width) > window.pageXOffset
-    );
-  }
-  return 0;
-}
+const getInfoFromElInView = (lstPosition) => {
+  // const {scrollY} = window.scrollY
+  const { x, y } = checkVp(lstPosition);
+  const obj = document.elementFromPoint(x, y);
+  const parentObj = obj.parentNode;
+  const dataFormImage = {
+    name: parentObj.dataset.name,
+    path: parentObj.dataset.path,
+    time: parentObj.dataset.time,
+    fF: parentObj.dataset.floorLocation,
+  };
+  return dataFormImage;
+};
 
 // eslint-disable-next-line no-unused-vars
 function shuffle(array) {
@@ -180,65 +185,28 @@ function shuffle(array) {
       [array[i], array[ri]] = [array[ri], array[i]];
     }
     return array;
-  } return [];
+  }
+  return [];
 }
-// const docs = document.getElementById('cnt');
-// const elem = document.elementFromPoint(document.window.width() / 2, document.window.height() / 2);
 
-// console.log(elem);
+(function () {
+  setTimeout(() => {
+    getInfoFromElInView();
+  }, 500);
+})();
 
-// elementInViewport2(docs);
+document.addEventListener("scroll", (e) => {
+  lstPosition = e.scrollY;
+  if (!posChange) {
+    getInfoFromElInView(parseFloat(lstPosition));
+    posChange = true;
+  }
+});
 
-// var getElementsInArea = (function(docElm){
-//     var viewportHeight = docElm.clientHeight;
-
-//     return function(e, opts){
-//         var found = [], i;
-
-//         if( e && e.type == 'resize' )
-//             viewportHeight = docElm.clientHeight;
-
-//         for( i = opts.elements.length; i--; ){
-//             var elm        = opts.elements[i],
-//                 pos        = elm.getBoundingClientRect(),
-//                 topPerc    = pos.top    / viewportHeight * 100,
-//                 bottomPerc = pos.bottom / viewportHeight * 100,
-//                 middle     = (topPerc + bottomPerc)/2,
-//                 inViewport = middle > opts.zone[1] &&
-//                              middle < (100-opts.zone[1]);
-
-//             elm.classList.toggle(opts.markedClass, inViewport);
-
-//             if( inViewport )
-//                 found.push(elm);
-//         }
-//     };
-// })(document.documentElement);
-
-// ////////////////////////////////////
-// // How to use:
-
-// window.addEventListener('scroll', f)
-// window.addEventListener('resize', f)
-
-// function f(e){
-//     getElementsInArea(e, {
-//         elements    : document.querySelectorAll('div'),
-//         markedClass : 'highlight--1',
-//         zone        : [20, 20] // percentage distance from top & bottom
-//     });
-
-//     getElementsInArea(e, {
-//         elements    : document.querySelectorAll('div'),
-//         markedClass : 'highlight--2',
-//         zone        : [40, 40] // percentage distance from top & bottom
-//     });
-// }
-document.addEventListener('touchstart', handleTouchStart, false);
-document.addEventListener('touchmove', handleTouchMove, false);
-
+document.addEventListener("touchstart", handleTouchStart, false);
+document.addEventListener("touchmove", handleTouchMove, false);
 export default {
-  name: 'Home',
+  name: "Home",
   store,
   components: {
     ShowContent,
@@ -261,11 +229,10 @@ export default {
     },
   },
   watch: {
-    floor: 'displayImgList',
-    time: 'displayImgList',
+    floor: "displayImgList",
+    time: "displayImgList",
   },
   methods: {
-
     displayImgList: () => {
       const { currentFloor } = store.state;
       const { limL, limH } = store.state.currentTime;
@@ -317,9 +284,7 @@ export default {
       }
     },
     scrollTop: () => {
-      document.querySelector('#top').scrollIntoView(
-        { behavior: 'smooth' },
-      );
+      document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
     },
   },
 };
