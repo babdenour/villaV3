@@ -148,6 +148,20 @@ function handleTouchMove(evt) {
   xDown = null;
   yDown = null;
 }
+// eslint-disable-next-line no-unused-vars
+function shuffle(array) {
+  if (array?.length) {
+    let i = array.length;
+    // eslint-disable-next-line no-plusplus
+    while (i--) {
+      const ri = Math.floor(Math.random() * i);
+      // eslint-disable-next-line no-param-reassign
+      [array[i], array[ri]] = [array[ri], array[i]];
+    }
+    return array;
+  }
+  return [];
+}
 
 const checkVp = (lstPosition) => {
   const vpWidth = window.innerWidth;
@@ -173,21 +187,6 @@ const getInfoFromElInView = (lstPosition) => {
   };
   return dataFormImage;
 };
-
-// eslint-disable-next-line no-unused-vars
-function shuffle(array) {
-  if (array?.length) {
-    let i = array.length;
-    // eslint-disable-next-line no-plusplus
-    while (i--) {
-      const ri = Math.floor(Math.random() * i);
-      // eslint-disable-next-line no-param-reassign
-      [array[i], array[ri]] = [array[ri], array[i]];
-    }
-    return array;
-  }
-  return [];
-}
 
 (function () {
   setTimeout(() => {
