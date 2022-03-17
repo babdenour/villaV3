@@ -1,11 +1,11 @@
 <template>
   <div
     class="img_desc"
-    :data-time="time"
+    :data-tm="time"
     :data-name="name"
     :data-path="path"
-    :data-fL="floorLocation"
-    @click="swipeTime()"
+    :data-fl="floorLocation"
+    :data-desc="desc"
   >
     <img :alt="name" :src="require(`@/${path}`)" />
     <div class="img_desc__desc stack" style="--stacks: 3">
@@ -102,11 +102,6 @@ export default {
     floorLocation: String,
     time: String,
     desc: String,
-  },
-  methods: {
-    swipeTime: () => {
-      console.log("click swipeTime fct");
-    },
   },
 };
 </script>
