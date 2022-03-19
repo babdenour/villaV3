@@ -25,7 +25,7 @@ body {
   color: #2c3e50;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 1rem;
 }
 </style>
 

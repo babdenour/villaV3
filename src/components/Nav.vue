@@ -50,28 +50,28 @@
       </div>
       <div class="menu__nav__nav_btn">
         <div
-          class="menu__nav__nav_btn__button is"
+          class="menu__nav__nav_btn__button"
           @click="switchTime(600, 1200)"
           :class="navTm === 'morning' ? 'isActive' : ''"
         >
           morning |
         </div>
         <div
-          class="menu__nav__nav_btn__button is"
+          class="menu__nav__nav_btn__button"
           @click="switchTime(1200, 1400)"
           :class="navTm === 'noon' ? 'isActive' : ''"
         >
           noon |
         </div>
         <div
-          class="menu__nav__nav_btn__button is"
+          class="menu__nav__nav_btn__button"
           @click="switchTime(1400, 2000)"
           :class="navTm === 'afternoon' ? 'isActive' : ''"
         >
           afternoon |
         </div>
         <div
-          class="menu__nav__nav_btn__button is"
+          class="menu__nav__nav_btn__button"
           @click="switchTime(2000, 5059)"
           :class="navTm === 'night' ? 'isActive' : ''"
         >
@@ -111,7 +111,7 @@ export default {
 
       store.dispatch("setCurrentTime", currentTime);
       store.dispatch("setCurrentFloor", floorSelected);
-      EM.emit("touchstart");
+      // EM.emit("touchstart");
     },
 
     switchTime: (limL, limH) => {
@@ -128,7 +128,7 @@ export default {
       };
       store.dispatch("setCurrentFloor", -1);
       store.dispatch("setCurrentTime", currentTime);
-      EM.emit("touchstart");
+      // EM.emit("touchstart");
     },
 
     resetAll: () => {
@@ -139,7 +139,7 @@ export default {
       store.dispatch("setCurrentFloor", -2);
       store.dispatch("setCurrentFloor", -1);
       store.dispatch("setCurrentTime", currentTime);
-      EM.emit("touchstart");
+      // EM.emit("touchstart");
     },
   },
 };
@@ -172,7 +172,8 @@ export default {
       text-align: left;
 
       &__button {
-        margin-bottom: 3px;
+        margin-bottom: 0.3vw;
+        margin-right: 0.4vw;
         cursor: pointer;
       }
       :active {
@@ -192,6 +193,14 @@ h1 {
   background-color: white;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 1.1rem;
+}
+@media only screen and (min-width: 770px) {
+  h1 {
+    font-size: 2.3vh;
+  }
+  .menu {
+    font-size: 2vh;
+  }
 }
 </style>

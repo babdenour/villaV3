@@ -49,6 +49,14 @@
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
 }
+
+@media screen and (min-width: 380px) {
+  .home {
+    width: 70%;
+    left: 15%;
+    right: 15%;
+  }
+}
 </style>
 
 <script>
@@ -136,18 +144,18 @@ function handleTouchMove(evt) {
     if (xDiff > 0) {
       /* left swipe */
       swipeToTime("left");
-      // getInfoFromElInView();
+      getInfoFromElInView();
     } else {
       /* right swipe */
       swipeToTime("right");
-      // getInfoFromElInView();
+      getInfoFromElInView();
     }
   } else if (yDiff > 0) {
     /* up swipe */
-    // getInfoFromElInView();
+    getInfoFromElInView();
   } else {
     /* down swipe */
-    // getInfoFromElInView();
+    getInfoFromElInView();
   }
   /* reset values */
   xDown = null;
@@ -181,8 +189,6 @@ const getInfoFromElInView = () => {
   const { x, y } = checkVp();
   const obj = document.elementFromPoint(x, y);
   const parentObj = obj.parentNode;
-  // const nx = parentObj.nextElementSibling;
-  // console.log("nx", nx);
   const dataFormImage = {
     name: parentObj.dataset?.name,
     path: parentObj.dataset?.path,
@@ -209,22 +215,8 @@ document.addEventListener("onwheel", getInfoFromElInView, true);
 document.addEventListener("mousemove", getInfoFromElInView, false);
 // document.addEventListener("scroll", getInfoFromElInView, false);
 
-document.addEventListener(
-  "touchstart",
-  (e) => {
-    handleTouchStart(e);
-    getInfoFromElInView();
-  },
-  false
-);
-document.addEventListener(
-  "touchmove",
-  (e) => {
-    handleTouchMove(e);
-    getInfoFromElInView();
-  },
-  false
-);
+document.addEventListener("touchstart", handleTouchStart, false);
+document.addEventListener("touchmove", handleTouchMove, false);
 
 export default {
   name: "Home",

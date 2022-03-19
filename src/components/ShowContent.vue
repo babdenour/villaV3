@@ -18,16 +18,19 @@
 
 <style lang="scss" scoped>
 .img_desc {
+  display: flex;
+  flex-direction: column;
+
   img {
     width: 100%;
     height: 100%;
   }
 
-  color: var(--color);
-  font-size: 0.5rem;
-  display: flex;
-  flex-direction: column;
-
+  &__desc {
+    margin-top: 0.2vw;
+    color: var(--color);
+    height: 2vh;
+  }
   .stack {
     display: grid;
     grid-template-columns: 1fr;
@@ -38,7 +41,7 @@
     font-weight: bold;
     grid-row-start: 1;
     grid-column-start: 1;
-    font-size: 16px;
+    // font-size: 16px;
     --stack-height: calc(100% / var(--stacks) - 1px);
     --inverse-index: calc(calc(var(--stacks) - 1) - var(--index));
     --clip-top: calc(var(--stack-height) * var(--index));
@@ -89,6 +92,18 @@
       text-shadow: none;
       transform: none;
     }
+  }
+}
+
+@media screen and (min-width: 1020px) {
+  .img_desc {
+    &__desc {
+      height: 3.3vh;
+    }
+  }
+
+  span {
+    font-size: 2vw;
   }
 }
 </style>
