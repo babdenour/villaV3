@@ -11,11 +11,9 @@
         :floorLocation="i.floorLocation"
         :time="i.time"
         :desc="i.desc"
-        @change="this.getInfoFromElInView()"
       />
-      <!-- try to add emit event  -->
     </div>
-    <div class="home__scroll_top" @click="scrollTop()">go top</div>
+    <div class="home__scroll_top" @click="callScrollTop()">go top</div>
   </div>
 </template>
 
@@ -50,7 +48,7 @@
   scroll-snap-type: y mandatory;
 }
 
-@media screen and (min-width: 380px) {
+@media screen and (min-width: 1180px) {
   .home {
     width: 70%;
     left: 15%;
@@ -118,6 +116,14 @@ const swipeToTime = (swipe) => {
   }
 };
 
+const scrollToTop = () => {
+  document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
+
+  setTimeout(() => {
+    getInfoFromElInView();
+  }, 500);
+};
+
 function getTouches(evt) {
   return evt.touches || evt.originalEvent.touches;
 }
@@ -126,6 +132,9 @@ function handleTouchStart(evt) {
   const firstTouch = getTouches(evt)[0];
   xDown = firstTouch.clientX;
   yDown = firstTouch.clientY;
+  setTimeout(() => {
+    getInfoFromElInView();
+  }, 800);
 }
 
 function handleTouchMove(evt) {
@@ -144,18 +153,28 @@ function handleTouchMove(evt) {
     if (xDiff > 0) {
       /* left swipe */
       swipeToTime("left");
-      getInfoFromElInView();
+      scrollToTop();
+      setTimeout(() => {
+        getInfoFromElInView();
+      }, 300);
     } else {
       /* right swipe */
       swipeToTime("right");
-      getInfoFromElInView();
+      scrollToTop();
+      setTimeout(() => {
+        getInfoFromElInView();
+      }, 300);
     }
   } else if (yDiff > 0) {
     /* up swipe */
-    getInfoFromElInView();
+    setTimeout(() => {
+      getInfoFromElInView();
+    }, 300);
   } else {
     /* down swipe */
-    getInfoFromElInView();
+    setTimeout(() => {
+      getInfoFromElInView();
+    }, 300);
   }
   /* reset values */
   xDown = null;
@@ -171,6 +190,7 @@ function shuffle(array) {
       // eslint-disable-next-line no-param-reassign
       [array[i], array[ri]] = [array[ri], array[i]];
     }
+    getInfoFromElInView();
     return array;
   }
   return [];
@@ -197,7 +217,6 @@ const getInfoFromElInView = () => {
     desc: parentObj.dataset?.desc,
   };
   store.dispatch("setNavHl", dataFormImage);
-  console.log(dataFormImage.name);
   return dataFormImage;
 };
 
@@ -206,15 +225,11 @@ const getInfoFromElInView = () => {
     getInfoFromElInView();
   }, 500);
 })();
-// TODO try to get a constant analyse of the scroll and vue for the nav update
-
-// const home = document.querySelector("scrollable");
-// home.addEventListener("scroll", (e) => getInfoFromElInView());
-
-document.addEventListener("onwheel", getInfoFromElInView, true);
+document.addEventListener("wheel", getInfoFromElInView, false);
 document.addEventListener("mousemove", getInfoFromElInView, false);
-// document.addEventListener("scroll", getInfoFromElInView, false);
-
+document.addEventListener("click", getInfoFromElInView, false);
+document.addEventListener("touchcancel", getInfoFromElInView, false);
+document.addEventListener("touchend", getInfoFromElInView, false);
 document.addEventListener("touchstart", handleTouchStart, false);
 document.addEventListener("touchmove", handleTouchMove, false);
 
@@ -227,9 +242,6 @@ export default {
   data() {
     return {};
   },
-  setup() {},
-  created() {},
-
   computed: {
     floor() {
       return store.getters.getCurrentFloor;
@@ -280,10 +292,9 @@ export default {
       }
       return [];
     },
-    scrollTop: () => {
-      document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
+    callScrollTop: () => {
+      scrollToTop();
     },
   },
-  mounted() {},
 };
 </script>
