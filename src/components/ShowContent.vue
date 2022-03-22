@@ -38,10 +38,9 @@
   }
 
   .stack span {
-    font-weight: bold;
+    font-weight: 500;
     grid-row-start: 1;
     grid-column-start: 1;
-    // font-size: 16px;
     --stack-height: calc(100% / var(--stacks) - 1px);
     --inverse-index: calc(calc(var(--stacks) - 1) - var(--index));
     --clip-top: calc(var(--stack-height) * var(--index));

@@ -4,27 +4,27 @@
 </template>
 
 <style lang="scss">
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+@import url("http://fonts.cdnfonts.com/css/albertus-mt-std");
+
 html {
   overflow: hidden;
 }
 
 body {
   margin: 0;
+  h1 {
+    font-family: "Albertus MT Std", sans-serif;
+  }
 }
 
 #app {
-  @font-face {
-    font-family: "Albertus";
-    src: url("./assets/fonts/AlbertusMTStd.woff") format("woff"),
-      url("./assets/fonts/AlbertusMTStdItalic.woff") format("woff"),
-      url("./assets/fonts/AlbertusMTStdLight.woff") format("woff");
-  }
-  font-family: "Albertus, sans-serif, Arial";
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 1rem;
 }
 </style>

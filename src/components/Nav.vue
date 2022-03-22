@@ -85,8 +85,6 @@
 <script>
 import store from "../store/index";
 
-// const EM = new EventEmitter();
-
 export default {
   name: "Nav",
   data() {
@@ -111,7 +109,6 @@ export default {
 
       store.dispatch("setCurrentTime", currentTime);
       store.dispatch("setCurrentFloor", floorSelected);
-      // EM.emit("touchstart");
     },
 
     switchTime: (limL, limH) => {
@@ -128,7 +125,6 @@ export default {
       };
       store.dispatch("setCurrentFloor", -1);
       store.dispatch("setCurrentTime", currentTime);
-      // EM.emit("touchstart");
     },
 
     resetAll: () => {
@@ -139,7 +135,6 @@ export default {
       store.dispatch("setCurrentFloor", -2);
       store.dispatch("setCurrentFloor", -1);
       store.dispatch("setCurrentTime", currentTime);
-      // EM.emit("touchstart");
     },
   },
 };
@@ -151,16 +146,6 @@ export default {
   top: 0;
   width: 100%;
   z-index: 2;
-
-  &__title {
-    @font-face {
-      font-family: "Albertus";
-      src: url("../assets/fonts/AlbertusMTStd.woff") format("woff"),
-        url("../assets/fonts/AlbertusMTStdItalic.woff") format("woff"),
-        url("../assets/fonts/AlbertusMTStdLight.woff") format("woff");
-    }
-    font-family: "Albertus";
-  }
 
   &__nav {
     background-color: white;
@@ -191,8 +176,6 @@ h1 {
   cursor: pointer;
   text-align: left;
   background-color: white;
-  font-style: normal;
-  font-weight: normal;
   font-size: 1.1rem;
 }
 @media only screen and (min-width: 770px) {
