@@ -4,8 +4,8 @@
 </template>
 
 <style lang="scss">
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
-@import url("http://fonts.cdnfonts.com/css/albertus-mt-std");
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+@import url("https://fonts.cdnfonts.com/css/albertus-mt-std");
 
 html {
   overflow: hidden;
