@@ -1,82 +1,70 @@
 <template>
   <div class="menu">
-    <h1 class="menu__title" @click="resetAll()" :class="navFl === -1 ? 'isActive' : ''">
-      villa theoreme
-    </h1>
+    <img
+      @click="resetAll()"
+      :class="navFl === -1 ? 'isActive' : ''"
+      src="../../public/logo.svg"
+      alt="theoreme editions"
+    />
+    <h1
+      class="menu__title"
+      @click="resetAll()"
+      :class="navFl === -1 ? 'isActive' : ''"
+    >theoreme editions</h1>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
         <div
           class="menu__nav__nav_btn__button"
           :class="navFl === 0 ? 'isActive' : ''"
           @click="switchFloor(0)"
-        >
-          GF |
-        </div>
+        >GF</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchFloor(1)"
           :class="navFl === 1 ? 'isActive' : ''"
-        >
-          1st F |
-        </div>
+        >1st F</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchFloor(2)"
           :class="navFl === 2 ? 'isActive' : ''"
-        >
-          2nd F |
-        </div>
+        >2nd F</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchFloor(2.5)"
           :class="navFl === 2.5 ? 'isActive' : ''"
-        >
-          2nd 1/2 F |
-        </div>
+        >2nd 1/2 F</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchFloor(3)"
           :class="navFl === 3 ? 'isActive' : ''"
-        >
-          3rd F |
-        </div>
+        >3rd F</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchFloor(4)"
           :class="navFl === 4 ? 'isActive' : ''"
-        >
-          4th F
-        </div>
+        >4th F</div>
       </div>
       <div class="menu__nav__nav_btn">
         <div
           class="menu__nav__nav_btn__button"
           @click="switchTime(600, 1200)"
           :class="navTm === 'morning' ? 'isActive' : ''"
-        >
-          morning |
-        </div>
+        >morning</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchTime(1200, 1400)"
           :class="navTm === 'noon' ? 'isActive' : ''"
-        >
-          noon |
-        </div>
+        >noon</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchTime(1400, 2000)"
           :class="navTm === 'afternoon' ? 'isActive' : ''"
-        >
-          afternoon |
-        </div>
+        >afternoon</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchTime(2000, 5059)"
           :class="navTm === 'night' ? 'isActive' : ''"
-        >
-          night
-        </div>
+        >night</div>
       </div>
     </div>
   </div>
@@ -147,18 +135,22 @@ export default {
   width: 100%;
   z-index: 2;
 
+  & > img {
+    height: 34vh;
+    margin: -5rem 0rem -5.7rem -6.8rem;
+  }
   &__nav {
     background-color: white;
-
+    margin-bottom: 0.5rem;
     &__nav_btn {
-      margin-top: 0.2rem;
+      margin: 0.2rem 0;
       display: flex;
       flex-direction: row;
       text-align: left;
 
       &__button {
         margin-bottom: 0.3vw;
-        margin-right: 0.4vw;
+        margin-right: 0.7rem;
         cursor: pointer;
       }
       :active {
@@ -173,17 +165,20 @@ export default {
 }
 
 h1 {
-  cursor: pointer;
-  text-align: left;
-  background-color: white;
-  font-size: 1.1rem;
+  display: none;
 }
+
 @media only screen and (min-width: 770px) {
-  h1 {
-    font-size: 2.3vh;
-  }
   .menu {
     font-size: 2vh;
+
+    & > img {
+      margin: -7rem 0rem -8rem -9.8rem;
+    }
+
+    &__nav {
+      margin: 1rem;
+    }
   }
 }
 </style>
