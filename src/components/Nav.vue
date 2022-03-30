@@ -6,11 +6,7 @@
       src="../../public/logo.svg"
       alt="theoreme editions"
     />
-    <h1
-      class="menu__title"
-      @click="resetAll()"
-      :class="navFl === -1 ? 'isActive' : ''"
-    >theoreme editions</h1>
+    <h1 class="menu__title">theoreme editions</h1>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
         <div
