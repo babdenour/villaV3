@@ -62,6 +62,7 @@
 import ShowContent from "../components/ShowContent.vue";
 import store from "../store/index";
 import dataImages from "../data/dataImages";
+import dataFurnitures from "../data/dataFurnitures";
 
 let xDown = null;
 let yDown = null;
@@ -258,7 +259,6 @@ export default {
     time: "displayImgList",
   },
   methods: {
-    // TODO refacto lim with simple string but its work
     displayImgList: () => {
       const { currentFloor } = store.state;
       const { limL, limH } = store.state.currentTime;
@@ -289,6 +289,14 @@ export default {
           });
           return shuffle(result);
         }
+      }
+      //TODO add furniture sorting
+      if (currentFloor === 9) {
+        // eslint-disable-next-line array-callback-return
+        dataFurnitures.find((el) => {
+          result.push(el);
+        });
+        return shuffle(result);
       }
       return [];
     },

@@ -58,9 +58,10 @@
         >afternoon</div>
         <div
           class="menu__nav__nav_btn__button"
-          @click="switchTime(2000, 5059)"
-          :class="navTm === 'night' ? 'isActive' : ''"
-        >night</div>
+          @click="switchFloor(9)"
+          :class="navTm === 'furniture' ? 'isActive' : ''"
+        >furniture</div>
+          <a :href="link" target="_blank" id="info" >more info</a>
       </div>
     </div>
   </div>
@@ -82,6 +83,9 @@ export default {
     navTm() {
       return store.getters.getNavHl?.time;
     },
+    // moreInfo() {
+      // return store.getters.
+    // },
   },
 
   methods: {
@@ -93,6 +97,7 @@ export default {
 
       store.dispatch("setCurrentTime", currentTime);
       store.dispatch("setCurrentFloor", floorSelected);
+      scrollToTop();
     },
 
     switchTime: (limL, limH) => {
@@ -100,15 +105,9 @@ export default {
         limL,
         limH,
       };
-      const navHL = {
-        fl: null,
-        time: null,
-        name: null,
-        path: null,
-        desc: null,
-      };
       store.dispatch("setCurrentFloor", -1);
       store.dispatch("setCurrentTime", currentTime);
+      scrollToTop();
     },
 
     resetAll: () => {
@@ -119,6 +118,15 @@ export default {
       store.dispatch("setCurrentFloor", -2);
       store.dispatch("setCurrentFloor", -1);
       store.dispatch("setCurrentTime", currentTime);
+      scrollToTop();
+    },
+
+    scrollToTop: () => {
+      document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
+
+      setTimeout(() => {
+        getInfoFromElInView();
+      }, 500);
     },
   },
 };
@@ -135,6 +143,7 @@ export default {
     height: 34vh;
     margin: -5rem 0rem -5.7rem -6.8rem;
   }
+
   &__nav {
     background-color: white;
     margin-bottom: 0.5rem;
@@ -146,8 +155,11 @@ export default {
 
       &__button {
         margin-bottom: 0.3vw;
-        margin-right: 0.7rem;
+        margin-right: 0.55rem;
         cursor: pointer;
+        opacity: 0.5;
+        width: fit-content;
+        height: fit-content;
       }
       :active {
         background-color: yellow;
@@ -157,11 +169,25 @@ export default {
 }
 .isActive {
   width: fit-content;
-  background-color: yellow;
+  height: fit-content;
+  opacity: 1;
+  font-weight: bold;
+  // background-color: rgb(255, 255, 159);
 }
 
 h1 {
   display: none;
+}
+
+
+
+#info {
+  width: fit-content;
+  font-size: 0.7rem;
+  margin: 1vw -0.9vw 0.1rem 3vh;
+  text-decoration: underline;
+  cursor: pointer;
+
 }
 
 @media only screen and (min-width: 770px) {
