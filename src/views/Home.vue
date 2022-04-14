@@ -311,6 +311,7 @@ export default {
       scrollToTop();
     },
     callGoToF: () => {
+      callScrollTop();
       goToFurniture(9);
     },
   },
