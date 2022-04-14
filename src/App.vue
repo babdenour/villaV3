@@ -12,12 +12,18 @@
   font-family: "Monaco";
   src: url("../src/assets/Fonts/Monaco.woff") format("woff");
 }
+@font-face {
+  font-family: "Villa";
+  src: url("../src/assets/Fonts/Village.ttf") format("ttf");
+}
+
 html {
   overflow: hidden;
 }
 
 body {
   margin: 0;
+  padding: 0;
 }
 
 #app {
@@ -29,6 +35,15 @@ body {
   font-weight: 500;
   font-size: 1rem;
 }
+
+@media screen and (min-width: 575px) {
+  body {
+    width: 50%;
+    left: 25%;
+    right: 25%;
+  }
+}
+
 </style>
 
 <script>

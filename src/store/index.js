@@ -3,22 +3,21 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     currentFloor: -1,
-    currentTime: {
-      limL: null,
-      limH: null,
-    },
+    timeIndex: 0,
     navHl: {
       desc: null,
       fl: null,
+      link: null,
       name: null,
       path: null,
-      time: null
+      text: null,
+      time: null,
     }
   },
 
   getters: {
     getCurrentFloor: (state) => state.currentFloor,
-    getCurrentTime: (state) => state.currentTime,
+    getTimeIndex: (state) => state.timeIndex,
     getNavHl: (state) => state.navHl,
   },
 
@@ -26,15 +25,16 @@ export default createStore({
     UPDATE_CURRENT_FLOOR: (state, currentFloor) => {
       state.currentFloor = currentFloor;
     },
-    UPDATE_CURRENT_TIME: (state, currentTime) => {
-      state.currentTime.limL = currentTime.limL;
-      state.currentTime.limH = currentTime.limH;
+    UPDATE_TIME_INDEX: (state, timeIndex) => {
+      state.timeIndex = timeIndex;
     },
     UPDATE_NAV_HL: (state, navHl) => {
       state.navHl.desc = navHl?.desc;
       state.navHl.fl = navHl?.fl;
+      state.navHl.link = navHl?.link;
       state.navHl.name = navHl?.name;
       state.navHl.path = navHl?.path;
+      state.navHl.text = navHl?.text;
       state.navHl.time = navHl?.time;
     },
   },
@@ -43,10 +43,10 @@ export default createStore({
     setCurrentFloor: (store, currentFloor) => {
       store.commit('UPDATE_CURRENT_FLOOR', currentFloor);
     },
-    setCurrentTime: (store, currentTime) => {
-      store.commit('UPDATE_CURRENT_TIME', currentTime);
+    setTimeIndex: (store, timeIndex) => {
+      store.commit('UPDATE_TIME_INDEX', timeIndex);
     },
-     setNavHl: (store, navHl) => {
+    setNavHl: (store, navHl) => {
       store.commit('UPDATE_NAV_HL', navHl);
     },
   },

@@ -1,17 +1,24 @@
 <template>
   <div
     class="img_desc"
-    :data-tm="time"
+    :data-desc="desc"
+    :data-fl="floorLocation"
+    :data-link="link"
     :data-name="name"
     :data-path="path"
-    :data-fl="floorLocation"
-    :data-desc="desc"
+    :data-text="text"
+    :data-tm="time"
   >
     <img :alt="name" :src="require(`@/${path}`)" />
-    <div class="img_desc__desc stack" style="--stacks: 3">
-      <span style="--index: 0">{{ desc }} {{ name }} {{ time }}</span>
-      <span style="--index: 1">{{ desc }} {{ name }} {{ time }}</span>
-      <span style="--index: 2">{{ desc }} {{ name }} {{ time }}</span>
+    <div v-if="time" class="img_desc__desc stack">
+      <span style="--index: 0">{{text}}</span>
+      <span style="--index: 1">{{text}}</span>
+      <span style="--index: 2">{{text}}</span>
+    </div>
+    <div v-if="time === undefined" class="img_desc__furnitures stack">
+      <span style="--index: 0">{{desc}} | {{ name }}</span>
+      <span style="--index: 1">{{desc}} | {{ name }}</span>
+      <span style="--index: 2">{{desc}} |{{ name }}</span>
     </div>
   </div>
 </template>
@@ -27,14 +34,23 @@
   }
 
   &__desc {
+    text-align: center;
+    padding: 0.7vw;
     margin-top: 0.2vw;
     color: var(--color);
-    height: 2vh;
+    --stacks: 3
+  }
+
+   &__furnitures {
+    margin-top: 0.2vw;
+    color: var(--color);
+    height: fit-content;
+    --stacks: 3
   }
   .stack {
     display: grid;
     grid-template-columns: 1fr;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
 
   .stack span {
@@ -97,12 +113,16 @@
 @media screen and (min-width: 1020px) {
   .img_desc {
     &__desc {
-      height: 3.3vh;
+      height: fit-content;
     }
   }
 
   span {
-    font-size: 2vw;
+    font-size: 1.3vw;
+  }
+
+  .stack {
+    margin-bottom: 3vw;
   }
 }
 </style>
@@ -111,11 +131,13 @@
 export default {
   name: "ShowContent",
   props: {
+    desc: String,
+    floorLocation: String,
+    link: String,
     name: String,
     path: String,
-    floorLocation: String,
+    text: String,
     time: String,
-    desc: String,
   },
 };
 </script>

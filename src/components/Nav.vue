@@ -1,12 +1,14 @@
 <template>
   <div class="menu">
-    <img
+    <!-- <img
       @click="resetAll()"
       :class="navFl === -1 ? 'isActive' : ''"
       src="../../public/logo.svg"
       alt="theoreme editions"
-    />
-    <h1 class="menu__title">theoreme editions</h1>
+    /> -->
+    <h1 @click="resetAll()"
+      class="menu__title"
+      :class="navFl === -1 ? 'isActive' : ''">THEOREME</h1>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
         <div
@@ -43,25 +45,25 @@
       <div class="menu__nav__nav_btn">
         <div
           class="menu__nav__nav_btn__button"
-          @click="switchTime(600, 1200)"
+          @click="switchTime(1)"
           :class="navTm === 'morning' ? 'isActive' : ''"
         >morning</div>
         <div
           class="menu__nav__nav_btn__button"
-          @click="switchTime(1200, 1400)"
+          @click="switchTime(2)"
           :class="navTm === 'noon' ? 'isActive' : ''"
         >noon</div>
         <div
           class="menu__nav__nav_btn__button"
-          @click="switchTime(1400, 2000)"
+          @click="switchTime(3)"
           :class="navTm === 'afternoon' ? 'isActive' : ''"
         >afternoon</div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchFloor(9)"
-          :class="navTm === 'furniture' ? 'isActive' : ''"
+          :class="furn === 9 ? 'isActive' : ''"
         >furniture</div>
-          <a :href="link" target="_blank" id="info" >more info</a>
+        <a :href="linkUrl" target="_blank" id="info" :class="linkUrl === undefined && furn !== 9 ? 'infoD' : 'info'">get info</a>
       </div>
     </div>
   </div>
@@ -69,6 +71,10 @@
 
 <script>
 import store from "../store/index";
+
+function scrollToTop() {
+  document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
+};
 
 export default {
   name: "Nav",
@@ -83,51 +89,34 @@ export default {
     navTm() {
       return store.getters.getNavHl?.time;
     },
-    // moreInfo() {
-      // return store.getters.
-    // },
+    furn() {
+      return store.getters.getCurrentFloor;
+    },
+    linkUrl() {
+      return store.getters.getNavHl?.link;
+    },
   },
 
   methods: {
     switchFloor: (floorSelected) => {
-      const currentTime = {
-        limL: null,
-        limH: null,
-      };
-
-      store.dispatch("setCurrentTime", currentTime);
       store.dispatch("setCurrentFloor", floorSelected);
+      store.dispatch("setTimeIndex", 0);
       scrollToTop();
     },
 
-    switchTime: (limL, limH) => {
-      const currentTime = {
-        limL,
-        limH,
-      };
+    switchTime: (timeIndex) => {
       store.dispatch("setCurrentFloor", -1);
-      store.dispatch("setCurrentTime", currentTime);
+      store.dispatch("setTimeIndex", timeIndex);
       scrollToTop();
     },
 
     resetAll: () => {
-      const currentTime = {
-        limL: null,
-        limH: null,
-      };
       store.dispatch("setCurrentFloor", -2);
       store.dispatch("setCurrentFloor", -1);
-      store.dispatch("setCurrentTime", currentTime);
+      store.dispatch("setTimeIndex", 0);
       scrollToTop();
     },
 
-    scrollToTop: () => {
-      document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
-
-      setTimeout(() => {
-        getInfoFromElInView();
-      }, 500);
-    },
   },
 };
 </script>
@@ -138,11 +127,6 @@ export default {
   top: 0;
   width: 100%;
   z-index: 2;
-
-  & > img {
-    height: 34vh;
-    margin: -5rem 0rem -5.7rem -6.8rem;
-  }
 
   &__nav {
     background-color: white;
@@ -176,31 +160,50 @@ export default {
 }
 
 h1 {
+ font-family: "Villa";
+ text-align: center;
+}
+
+.infoD {
   display: none;
 }
-
-
-
-#info {
+.info {
   width: fit-content;
   font-size: 0.7rem;
-  margin: 1vw -0.9vw 0.1rem 3vh;
+  margin: 1vw -0.9vw 0 3vh;
   text-decoration: underline;
   cursor: pointer;
-
+  color: black;
 }
 
-@media only screen and (min-width: 770px) {
+@media only screen and (min-width: 575px) {
   .menu {
+    width: 46%;
+    left: 27%;
+    right: 27%;
     font-size: 2vh;
-
-    & > img {
-      margin: -7rem 0rem -8rem -9.8rem;
-    }
 
     &__nav {
       margin: 1rem;
     }
   }
 }
+
+@media only screen and (min-width: 1500px) {
+  .menu {
+    width: 40%;
+    left: 30%;
+    right: 30%;
+    font-size: 2vh;
+    margin-top: -1vw;
+h1 {
+  margin: -1vw 0;
+}
+    &__nav {
+      margin: 0vw 0 0 3vw;
+      padding: -1vw;
+    }
+  }
+}
+
 </style>
