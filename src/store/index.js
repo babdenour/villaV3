@@ -2,8 +2,9 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    currentFloor: -1,
+    currentFloor: 0,
     timeIndex: 0,
+    scrollIndex: 0,
     navHl: {
       desc: null,
       fl: null,
@@ -18,6 +19,7 @@ export default createStore({
   getters: {
     getCurrentFloor: (state) => state.currentFloor,
     getTimeIndex: (state) => state.timeIndex,
+    getScrollIndex: (state) => state.scrollIndex,
     getNavHl: (state) => state.navHl,
   },
 
@@ -27,6 +29,9 @@ export default createStore({
     },
     UPDATE_TIME_INDEX: (state, timeIndex) => {
       state.timeIndex = timeIndex;
+    },
+    UPDATE_SCROLL_INDEX: (state, scrollIndex) => {
+      state.scrollIndex = scrollIndex;
     },
     UPDATE_NAV_HL: (state, navHl) => {
       state.navHl.desc = navHl?.desc;
@@ -45,6 +50,9 @@ export default createStore({
     },
     setTimeIndex: (store, timeIndex) => {
       store.commit('UPDATE_TIME_INDEX', timeIndex);
+    },
+    setScrollIndex: (store, scrollIndex) => {
+      store.commit('UPDATE_Scroll_INDEX', scrollIndex);
     },
     setNavHl: (store, navHl) => {
       store.commit('UPDATE_NAV_HL', navHl);

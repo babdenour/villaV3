@@ -18,7 +18,7 @@
     <div v-if="time === undefined" class="img_desc__furnitures stack">
       <span style="--index: 0">{{desc}} | {{ name }}</span>
       <span style="--index: 1">{{desc}} | {{ name }}</span>
-      <span style="--index: 2">{{desc}} |{{ name }}</span>
+      <span style="--index: 2">{{desc}} | {{ name }}</span>
     </div>
   </div>
 </template>

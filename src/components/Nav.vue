@@ -6,64 +6,33 @@
       src="../../public/logo.svg"
       alt="theoreme editions"
     /> -->
-    <h1 @click="resetAll()"
-      class="menu__title"
-      :class="navFl === -1 ? 'isActive' : ''">THEOREME</h1>
+    <h1 class="menu__title"  @click="resetAll()" :class="navFl === -1 ? 'isActive' : ''">
+      <router-link to="/"> THEOREME</router-link>
+    </h1>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
         <div
           class="menu__nav__nav_btn__button"
-          :class="navFl === 0 ? 'isActive' : ''"
-          @click="switchFloor(0)"
-        >GF</div>
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchFloor(1)"
-          :class="navFl === 1 ? 'isActive' : ''"
-        >1st F</div>
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchFloor(2)"
-          :class="navFl === 2 ? 'isActive' : ''"
-        >2nd F</div>
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchFloor(2.5)"
-          :class="navFl === 2.5 ? 'isActive' : ''"
-        >2nd 1/2 F</div>
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchFloor(3)"
-          :class="navFl === 3 ? 'isActive' : ''"
-        >3rd F</div>
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchFloor(4)"
-          :class="navFl === 4 ? 'isActive' : ''"
-        >4th F</div>
-      </div>
-      <div class="menu__nav__nav_btn">
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchTime(1)"
-          :class="navTm === 'morning' ? 'isActive' : ''"
-        >morning</div>
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchTime(2)"
-          :class="navTm === 'noon' ? 'isActive' : ''"
-        >noon</div>
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchTime(3)"
-          :class="navTm === 'afternoon' ? 'isActive' : ''"
-        >afternoon</div>
+          @click="switchFloor()"
+          :class="furn != 9 ? 'isActive' : ''"
+        >
+          {{ floor }}
+        </div>
         <div
           class="menu__nav__nav_btn__button"
           @click="switchFloor(9)"
           :class="furn === 9 ? 'isActive' : ''"
-        >furniture</div>
-        <a :href="linkUrl" target="_blank" id="info" :class="linkUrl === undefined && furn !== 9 ? 'infoD' : 'info'">get info</a>
+        >
+          furniture
+        </div>
+        <router-link style="opacity: 0.5" to="/about" id="about">About</router-link>
+        <a
+          :href="linkUrl"
+          target="_blank"
+          id="info"
+          :class="linkUrl === undefined && furn !== 9 ? 'infoD' : 'info'"
+          >get info</a
+        >
       </div>
     </div>
   </div>
@@ -71,13 +40,13 @@
 
 <script>
 import store from "../store/index";
-
 function scrollToTop() {
   document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
-};
+}
 
 export default {
   name: "Nav",
+  store,
   data() {
     return {};
   },
@@ -95,28 +64,61 @@ export default {
     linkUrl() {
       return store.getters.getNavHl?.link;
     },
+    floor() {
+      return this.getFloor();
+    },
   },
 
   methods: {
+    getFloor: () => {
+      const { navHl } = store.state;
+      const currFl = navHl.fl;
+      let floorName = "Floors";
+
+      if (currFl === 0) {
+        floorName = "Ground Floor";
+      } else if (currFl === 1) {
+        floorName = "Floor 1";
+      } else if (currFl === 2) {
+        floorName = "Floor 2";
+      } else if (currFl === 3) {
+        floorName = "Floor 3";
+      } else if (currFl === 4) {
+        floorName = "Floor 4";
+      }
+      return floorName;
+    },
+
     switchFloor: (floorSelected) => {
+      const { currentFloor } = store.state;
+      floorSelected = floorSelected  || currentFloor;
+
+      console.log("ouaiii", floorSelected)
+
+      if (floorSelected === 9) {
+        store.dispatch("setCurrentFloor", 0);
+        store.dispatch("setTimeIndex", 0);
+      }
+
+      (0 < floorSelected && floorSelected <= 4) ?  floorSelected -= 1 : floorSelected;
+
       store.dispatch("setCurrentFloor", floorSelected);
       store.dispatch("setTimeIndex", 0);
       scrollToTop();
     },
 
     switchTime: (timeIndex) => {
-      store.dispatch("setCurrentFloor", -1);
+      store.dispatch("setCurrentFloor", 0);
       store.dispatch("setTimeIndex", timeIndex);
       scrollToTop();
     },
 
     resetAll: () => {
-      store.dispatch("setCurrentFloor", -2);
-      store.dispatch("setCurrentFloor", -1);
+      // store.dispatch("setCurrentFloor", -2);
+      store.dispatch("setCurrentFloor", 0);
       store.dispatch("setTimeIndex", 0);
       scrollToTop();
     },
-
   },
 };
 </script>
@@ -136,7 +138,6 @@ export default {
       display: flex;
       flex-direction: row;
       text-align: left;
-
       &__button {
         margin-bottom: 0.3vw;
         margin-right: 0.55rem;
@@ -160,8 +161,8 @@ export default {
 }
 
 h1 {
- font-family: "Villa";
- text-align: center;
+  font-family: "Villa";
+  text-align: center;
 }
 
 .infoD {
@@ -196,14 +197,13 @@ h1 {
     right: 30%;
     font-size: 2vh;
     margin-top: -1vw;
-h1 {
-  margin: -1vw 0;
-}
+    h1 {
+      margin: -1vw 0;
+    }
     &__nav {
       margin: 0vw 0 0 3vw;
       padding: -1vw;
     }
   }
 }
-
 </style>

@@ -1,20 +1,20 @@
 <template>
-  <Nav />
+  <!-- <Nav v-if="this.$router.currentRoute != 'about'"/> -->
   <router-view />
 </template>
 
 <style lang="scss">
 @font-face {
   font-family: "Lucida";
-  src: url("../src/assets/Fonts/Lucida-Console-Regular.ttf") format("ttf");
+  src: url("../src/assets/fonts/Lucida-Console-Regular.ttf") format("ttf");
 }
 @font-face {
   font-family: "Monaco";
-  src: url("../src/assets/Fonts/Monaco.woff") format("woff");
+  src: url("../src/assets/fonts/Monaco.woff") format("woff");
 }
 @font-face {
-  font-family: "Villa";
-  src: url("../src/assets/Fonts/Village.ttf") format("ttf");
+  font-family: "Village";
+  src: url("../src/assets/fonts/Village.ttf") format("ttf");
 }
 
 html {
@@ -27,23 +27,29 @@ body {
 }
 
 #app {
-  font-family: "Lucida", "Monaco", monospace;
+  font-family: "Village", "Lucida", "Monaco", monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-style: normal;
   font-weight: 500;
   font-size: 1rem;
+  padding-bottom: 1rem;
 }
 
 @media screen and (min-width: 575px) {
   body {
+    position: absolute;
     width: 50%;
     left: 25%;
     right: 25%;
   }
 }
 
+a {
+  text-decoration: none;
+  color: #2c3e50;
+}
 </style>
 
 <script>

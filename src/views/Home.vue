@@ -1,26 +1,22 @@
 <template>
+  <Nav />
   <div class="home snapping" name="home">
     <div id="top"></div>
+    <!-- v-for="i in list" -->
     <ShowContent
       class="home__container"
-      v-for="i in list"
-      :key="i.index"
-      :desc="i.desc"
-      :floorLocation="i.floorLocation"
-      :link="i.link"
-      :name="i.name"
-      :path="i.path"
-      :text="i.text"
-      :time="i.time"
+      :key="list[0].index"
+      :desc="list[0].desc"
+      :floorLocation="list[0].floorLocation"
+      :link="list[0].link"
+      :name="list[0].name"
+      :path="list[0].path"
+      :text="list[0].text"
+      :time="list[0].time"
     />
-    <div class="home__scroll_more" v-if="floor !== 9">
-      <div @click="callGoToF(9)">
-        see all furnitures !
-      </div>
-      <div id="more_top" @click="callScrollTop()">
-        go top
-      </div>
-    </div>
+    <!-- <div class="home__scroll_more" v-if="floor !== 9">
+      <div id="more_top" @click="callScrollTop()">go top</div>
+    </div> -->
   </div>
 </template>
 
@@ -41,7 +37,7 @@
     display: flex;
     flex-direction: row;
     align-items: baseline;
-    justify-content: space-between;
+    justify-content: center;
 
     > #more_top {
       font-weight: bold;
@@ -78,7 +74,7 @@
     width: 35%;
     left: 32.5%;
     right: 32.5%;
-    margin-top: -1.5vw
+    margin-top: -1.5vw;
   }
 
   #furntiures {
@@ -86,7 +82,6 @@
     width: fit-content;
   }
 }
-
 </style>
 
 <script>
@@ -95,6 +90,7 @@ import ShowContent from "../components/ShowContent.vue";
 import store from "../store/index";
 import dataImages from "../data/dataImages";
 import dataFurnitures from "../data/dataFurnitures";
+import Nav from "../components/Nav.vue";
 
 let xDown = null;
 let yDown = null;
@@ -111,7 +107,22 @@ const swipeToTime = (swipe) => {
     } else if (swipe === "left") {
       timeI += 1;
       if (timeI > 3) timeI = 1;
-      store.dispatch("setTimeIndex",timeI);
+      store.dispatch("setTimeIndex", timeI);
+    }
+  }
+};
+
+const scrollToNextFloor = (scroll) => {
+  const { currentFloor } = store.state;
+  let floor = currentFloor;
+
+  if (currentFloor !== 9) {
+    if (scroll === "next" && currentFloor < 4) {
+      floor += 1;
+      store.dispatch("setCurrentFloor", floor);
+    } else if (scroll === "previous" && currentFloor > 0) {
+      floor -= 1;
+      store.dispatch("setCurrentFloor", floor);
     }
   }
 };
@@ -130,7 +141,7 @@ const goToFurniture = (floorSelected) => {
 
 function getTouches(evt) {
   return evt.touches || evt.originalEvent.touches;
-};
+}
 
 function handleTouchStart(evt) {
   const firstTouch = getTouches(evt)[0];
@@ -139,7 +150,14 @@ function handleTouchStart(evt) {
   setTimeout(() => {
     getInfoFromElInView();
   }, 800);
-};
+}
+
+function changeFloor(index) {
+  const { scrollIndex } = store.state;
+  (scrollIndex) => (4 ? (index = -1) : (index = 1));
+
+  store.dispatch("setScrollIndex", index);
+}
 
 function handleTouchMove(evt) {
   if (!xDown || !yDown) {
@@ -156,63 +174,59 @@ function handleTouchMove(evt) {
     /* most significant */
     if (xDiff > 0) {
       /* left swipe */
+      // TODO view next img till last time
       swipeToTime("left");
-      scrollToTop();
+      // scrollToTop();
       setTimeout(() => {
         getInfoFromElInView();
       }, 300);
     } else {
       /* right swipe */
+      // TODO view previous img till first time
       swipeToTime("right");
-      scrollToTop();
+      // scrollToTop();
       setTimeout(() => {
         getInfoFromElInView();
       }, 300);
     }
   } else if (yDiff > 0) {
     /* up swipe */
+
+    scrollToNextFloor("next");
     setTimeout(() => {
-      getInfoFromElInView();
+      scrollToTop();
     }, 300);
+    // setTimeout(() => {
+    //   getInfoFromElInView();
+    // }, 300);
   } else {
     /* down swipe */
+    scrollToNextFloor("previous");
     setTimeout(() => {
-      getInfoFromElInView();
+      scrollToTop();
     }, 300);
+    // setTimeout(() => {
+    //   getInfoFromElInView();
+    // }, 300);
   }
   /* reset values */
   xDown = null;
   yDown = null;
-};
+}
 // eslint-disable-next-line no-unused-vars
-function shuffle(array) {
-  if (array?.length) {
-    let i = array.length;
-    // eslint-disable-next-line no-plusplus
-    while (i--) {
-      const ri = Math.floor(Math.random() * i);
-      // eslint-disable-next-line no-param-reassign
-      [array[i], array[ri]] = [array[ri], array[i]];
-    }
-    getInfoFromElInView();
-    return array;
-  }
-  return [];
-};
-
-// try to add pull down to refresh
-// const isVisible = ()=> {
-//   const el = document.querySelector("#more_top")
-//   const vHeight = (window.innerHeight || document.documentElement.clientHeight);
-//   const y = null;
-//   if (el.getBoundingClientRect() ==! null) {
-//     const h = el.getBoundingClientRect();
-//     y = h.y;
-
-//     if (y < vHeight) {
-//       scrollToTop();
+// function shuffle(array) {
+//   if (array?.length) {
+//     let i = array.length;
+//     // eslint-disable-next-line no-plusplus
+//     while (i--) {
+//       const ri = Math.floor(Math.random() * i);
+//       // eslint-disable-next-line no-param-reassign
+//       [array[i], array[ri]] = [array[ri], array[i]];
 //     }
+//     getInfoFromElInView();
+//     return array;
 //   }
+//   return [];
 // };
 
 const checkVp = () => {
@@ -259,6 +273,7 @@ export default {
   store,
   components: {
     ShowContent,
+    Nav,
   },
   data() {
     return {};
@@ -273,6 +288,9 @@ export default {
     list() {
       return this.displayImgList();
     },
+    img() {
+      return this.displayImg();
+    },
   },
   watch: {
     floor: "displayImgList",
@@ -283,29 +301,39 @@ export default {
       const { currentFloor, timeIndex } = store.state;
       const result = [];
 
-      if (currentFloor === -1 && timeIndex === 0) {
-        dataImages.forEach(() => result.push(dataImages[Math.floor(Math.random() * dataImages.length)]));
+      if (currentFloor >= 0 && timeIndex >= 0) {
+        dataImages.find((el) => {
+          if (
+            parseFloat(el.floorLocation) === parseFloat(currentFloor) &&
+            timeIndex === el.timeIndex
+          )
+            result.push(el);
+        });
         return result;
       }
-      else if (currentFloor !== -1 && currentFloor !== 9 || timeIndex !== 0) {
-        if (currentFloor !== -1) {
-          dataImages.find((el) => {
-            if (parseFloat(el.floorLocation) === parseFloat(currentFloor)) result.push(el)
-          });
-          return shuffle(result);
-        }
-        if (timeIndex !== 0) {
-          dataImages.find((el) => {
-            if (timeIndex === el.timeIndex) result.push(el)
-          });
-          return shuffle(result);
-        }
+      if (timeIndex !== 0) {
+        dataImages.find((el) => {
+          if (timeIndex === el.timeIndex) result.push(el);
+        });
+        return result;
       }
-      else if (currentFloor === 9) {
+      if (currentFloor === 9) {
         dataFurnitures.forEach((el) => result.push(el));
         return result;
       }
       return [];
+    },
+    displayImg: () => {
+      // TODO show floor by floor only 0 -> 4 floors each floor carroussel
+      const { currentFloor, timeIndex } = store.state;
+      const result = [];
+
+      dataImages.map((e) => {
+        if (parseFloat(e.floorLocation) === parseFloat(currentFloor)) {
+          result.push(e);
+        }
+      });
+      return result;
     },
     callScrollTop: () => {
       scrollToTop();
