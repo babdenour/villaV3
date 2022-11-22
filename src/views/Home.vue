@@ -4,19 +4,27 @@
     <div class="home snapping" name="home">
       <div id="top"></div>
       <!-- v-for="i in list" -->
-      <ShowContent
+      <!-- <ShowContent
         v-if="floor !== 9"
         class="home__container"
-        :key="list[0]?.index"
-        :desc="list[0]?.desc"
-        :floorLocation="list[0]?.floorLocation"
-        :link="list[0]?.link"
-        :name="list[0]?.name"
-        :path="list[0]?.path"
-        :text="list[0]?.text"
-        :time="list[0]?.time"
-      />
-      <ShowFurniture
+        :key="list[1]?.index"
+        :desc="list[1]?.desc"
+        :floorLocation="list[1]?.floorLocation"
+        :link="list[1]?.link"
+        :name="list[1]?.name"
+        :path="list[1]?.path"
+        :text="list[1]?.text"
+        :time="list[1]?.time"
+      /> -->
+      <v-carousel :show-arrows="false" hide-delimiters v-if="floor !== 9">
+        <v-carousel-item
+          v-for="(item, i) in list"
+          :key="i"
+          :src="item?.path"
+          cover
+        ></v-carousel-item>
+      </v-carousel>
+      <!-- <ShowFurniture
         v-if="floor === 9"
         class="home__container"
         :key="list[0]?.index"
@@ -24,7 +32,15 @@
         :link="list[0]?.link"
         :name="list[0]?.name"
         :path="list[0]?.path"
-      />
+      /> -->
+      <v-carousel :show-arrows="false" hide-delimiters  v-if="floor === 9">
+        <v-carousel-item
+          v-for="(item, i) in items"
+          :key="i"
+          :src="item.src"
+          cover
+        ></v-carousel-item>
+      </v-carousel>
       <!-- <div class="home__scroll_more" v-if="floor !== 9">
       <div id="more_top" @click="callScrollTop()">go top</div>
     </div> -->
@@ -268,7 +284,22 @@ export default {
     Nav,
   },
   data() {
-    return {};
+    return {
+      items: [
+        {
+          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+        },
+        {
+          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        },
+        {
+          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+        },
+        {
+          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
+        },
+      ],
+    };
   },
   computed: {
     floor() {
@@ -315,18 +346,31 @@ export default {
     displayImgList: () => {
       const { currentFloor, timeIndex } = store.state;
       const result = [];
+
       if (currentFloor === 9) {
         dataFurnitures.forEach((el) => result.push(el));
+        console.log("furnitures", result)
         return result;
       }
-      if (9 > currentFloor >= 0 && 4 > timeIndex >= 0) {
+      // if (9 > currentFloor >= 0 && 4 > timeIndex >= 0) {
+      //   dataImages.map((e) => {
+      //     if (
+      //       parseFloat(e.floorLocation) === parseFloat(currentFloor) &&
+      //       timeIndex === e.timeIndex
+      //     ) {
+      //       result.push(e);
+      //     }
+      //   });
+      // }
+      if (9 > currentFloor >= 0) {
         dataImages.map((e) => {
           if (
-            parseFloat(e.floorLocation) === parseFloat(currentFloor) &&
-            timeIndex === e.timeIndex
+            parseFloat(e.floorLocation) === parseFloat(currentFloor)
           ) {
             result.push(e);
           }
+        console.log("img", result)
+          return result;
         });
       }
       return result;

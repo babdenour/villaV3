@@ -93,9 +93,7 @@ export default {
 
     switchFloor: (floorSelected) => {
       const { currentFloor } = store.state;
-      floorSelected = floorSelected || currentFloor;
-
-      console.log("ouaiii", floorSelected);
+      floorSelected = floorSelected ?? currentFloor;
 
       if (floorSelected === 9) {
         store.dispatch("setCurrentFloor", 0);
