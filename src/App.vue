@@ -1,5 +1,4 @@
 <template>
-  <!-- <Nav v-if="this.$router.currentRoute != 'about'"/> -->
   <router-view />
 </template>
 
@@ -17,9 +16,9 @@
   src: url("../src/assets/fonts/Village.ttf") format("ttf");
 }
 
-html {
-  overflow: hidden;
-}
+// html {
+  // overflow: hidden;
+// }
 
 body {
   margin: 0;
@@ -51,13 +50,3 @@ a {
   color: #2c3e50;
 }
 </style>
-
-<script>
-import Nav from "./components/Nav.vue";
-
-export default {
-  components: {
-    Nav,
-  },
-};
-</script>

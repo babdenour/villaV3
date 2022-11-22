@@ -1,22 +1,34 @@
 <template>
-  <Nav />
-  <div class="home snapping" name="home">
-    <div id="top"></div>
-    <!-- v-for="i in list" -->
-    <ShowContent
-      class="home__container"
-      :key="list[0].index"
-      :desc="list[0].desc"
-      :floorLocation="list[0].floorLocation"
-      :link="list[0].link"
-      :name="list[0].name"
-      :path="list[0].path"
-      :text="list[0].text"
-      :time="list[0].time"
-    />
-    <!-- <div class="home__scroll_more" v-if="floor !== 9">
+  <div>
+    <Nav />
+    <div class="home snapping" name="home">
+      <div id="top"></div>
+      <!-- v-for="i in list" -->
+      <ShowContent
+        v-if="floor !== 9"
+        class="home__container"
+        :key="list[0]?.index"
+        :desc="list[0]?.desc"
+        :floorLocation="list[0]?.floorLocation"
+        :link="list[0]?.link"
+        :name="list[0]?.name"
+        :path="list[0]?.path"
+        :text="list[0]?.text"
+        :time="list[0]?.time"
+      />
+      <ShowFurniture
+        v-if="floor === 9"
+        class="home__container"
+        :key="list[0]?.index"
+        :desc="list[0]?.desc"
+        :link="list[0]?.link"
+        :name="list[0]?.name"
+        :path="list[0]?.path"
+      />
+      <!-- <div class="home__scroll_more" v-if="floor !== 9">
       <div id="more_top" @click="callScrollTop()">go top</div>
     </div> -->
+    </div>
   </div>
 </template>
 
@@ -87,6 +99,7 @@
 <script>
 // @ is an alias to /src
 import ShowContent from "../components/ShowContent.vue";
+import ShowFurniture from "../components/ShowFurniture.vue";
 import store from "../store/index";
 import dataImages from "../data/dataImages";
 import dataFurnitures from "../data/dataFurnitures";
@@ -100,13 +113,11 @@ const swipeToTime = (swipe) => {
   let timeI = timeIndex;
 
   if (currentFloor !== 9) {
-    if (swipe === "right") {
-      timeI -= 1;
-      if (timeI < 1) timeI = 3;
-      store.dispatch("setTimeIndex", timeI);
-    } else if (swipe === "left") {
+    if (swipe === "right" && timeI < 4) {
       timeI += 1;
-      if (timeI > 3) timeI = 1;
+      store.dispatch("setTimeIndex", timeI);
+    } else if (swipe === "left" && timeI > 0) {
+      timeI -= 1;
       store.dispatch("setTimeIndex", timeI);
     }
   }
@@ -174,24 +185,19 @@ function handleTouchMove(evt) {
     /* most significant */
     if (xDiff > 0) {
       /* left swipe */
-      // TODO view next img till last time
-      swipeToTime("left");
-      // scrollToTop();
+      swipeToTime("right");
       setTimeout(() => {
         getInfoFromElInView();
       }, 300);
     } else {
       /* right swipe */
-      // TODO view previous img till first time
-      swipeToTime("right");
-      // scrollToTop();
+      swipeToTime("left");
       setTimeout(() => {
         getInfoFromElInView();
       }, 300);
     }
   } else if (yDiff > 0) {
     /* up swipe */
-
     scrollToNextFloor("next");
     setTimeout(() => {
       scrollToTop();
@@ -213,21 +219,6 @@ function handleTouchMove(evt) {
   xDown = null;
   yDown = null;
 }
-// eslint-disable-next-line no-unused-vars
-// function shuffle(array) {
-//   if (array?.length) {
-//     let i = array.length;
-//     // eslint-disable-next-line no-plusplus
-//     while (i--) {
-//       const ri = Math.floor(Math.random() * i);
-//       // eslint-disable-next-line no-param-reassign
-//       [array[i], array[ri]] = [array[ri], array[i]];
-//     }
-//     getInfoFromElInView();
-//     return array;
-//   }
-//   return [];
-// };
 
 const checkVp = () => {
   const vpWidth = window.innerWidth;
@@ -273,6 +264,7 @@ export default {
   store,
   components: {
     ShowContent,
+    ShowFurniture,
     Nav,
   },
   data() {
@@ -288,51 +280,55 @@ export default {
     list() {
       return this.displayImgList();
     },
-    img() {
-      return this.displayImg();
-    },
   },
   watch: {
     floor: "displayImgList",
     timeI: "displayImgList",
   },
   methods: {
+    // displayImgList: () => {
+    //   const { currentFloor, timeIndex } = store.state;
+    //   const result = [];
+
+    //   if (9 > currentFloor >= 0 && 4 > timeIndex >= 0) {
+    //     dataImages.find((el) => {
+    //       if (
+    //         parseFloat(el.floorLocation) === parseFloat(currentFloor) &&
+    //         timeIndex === el.timeIndex
+    //       )
+    //         result.push(el);
+    //     });
+    //     return result;
+    //   }
+    //   // if (timeIndex !== 0) {
+    //   //   dataImages.find((el) => {
+    //   //     if (timeIndex === el.timeIndex) result.push(el);
+    //   //   });
+    //   //   return result;
+    //   // }
+    //   if (currentFloor === 9) {
+    //     dataFurnitures.forEach((el) => result.push(el));
+    //     return result;
+    //   }
+    //   return [];
+    // },
     displayImgList: () => {
       const { currentFloor, timeIndex } = store.state;
       const result = [];
-
-      if (currentFloor >= 0 && timeIndex >= 0) {
-        dataImages.find((el) => {
-          if (
-            parseFloat(el.floorLocation) === parseFloat(currentFloor) &&
-            timeIndex === el.timeIndex
-          )
-            result.push(el);
-        });
-        return result;
-      }
-      if (timeIndex !== 0) {
-        dataImages.find((el) => {
-          if (timeIndex === el.timeIndex) result.push(el);
-        });
-        return result;
-      }
       if (currentFloor === 9) {
         dataFurnitures.forEach((el) => result.push(el));
         return result;
       }
-      return [];
-    },
-    displayImg: () => {
-      // TODO show floor by floor only 0 -> 4 floors each floor carroussel
-      const { currentFloor, timeIndex } = store.state;
-      const result = [];
-
-      dataImages.map((e) => {
-        if (parseFloat(e.floorLocation) === parseFloat(currentFloor)) {
-          result.push(e);
-        }
-      });
+      if (9 > currentFloor >= 0 && 4 > timeIndex >= 0) {
+        dataImages.map((e) => {
+          if (
+            parseFloat(e.floorLocation) === parseFloat(currentFloor) &&
+            timeIndex === e.timeIndex
+          ) {
+            result.push(e);
+          }
+        });
+      }
       return result;
     },
     callScrollTop: () => {

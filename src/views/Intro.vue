@@ -6,44 +6,59 @@ export default {
 
 <template>
   <div class="intro" name="intro">
-    <router-link to="/home" style=" display: flex;
-  flex-direction: column; place-content: center;
-  place-items: center;">
-      <img id="manifest-logo" src="../../public/logo.svg" alt="manifeste" />
+    <router-link
+      to="/home"
+      style="
+        display: flex;
+        flex-direction: column;
+        place-content: center;
+        place-items: center;
+      "
+    >
+      <img id="manifest-logo" src="../../public/logo.png" alt="manifeste" />
+      <br/>
       <div class="manifest-text">
         <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut perferendis minus
         </p>
         <p>suscipit quisquam dicta cumque, incidunt dolor laboriosam? Eius, minu</p>
-        <p>s optio itaque magni quam porro maxime nihil ipsa voluptas a!</p>
+        <p>suscipit quisquam dicta cumque, incidunt dolor laboriosam? Eius, minu</p>
       </div>
-      <img id="manifest-illu" src="../assets/about.png" alt="manifeste" />
+      <img id="manifest-illu" src="../assets/images/4F-04.jpg" alt="manifeste" />
     </router-link>
     <br />
-    <br />
-    <router-link to="/about">get more informations about us</router-link>
+    <router-link to="/about"
+      >get more informations
+      <span style="color: blue; font-size: ">about</span> us</router-link
+    >
   </div>
 </template>
 
 <style lang="scss">
 .intro {
-  width: 100%;
+  padding: 3px;
+  width: 98%;
   display: flex;
   flex-direction: column;
   place-content: center;
   place-items: center;
+  font-family: "Lucida";
 }
 
 #manifest-logo {
-  width: 30%;
+  width: 98%;
 }
 
 #manifest-illu {
-  width: 50%;
+  width: 90%;
 }
 
 .manifest-text {
   text-align: center;
   width: 80%;
+}
+p,
+span {
+  font-size: 1.8vh;
 }
 </style>

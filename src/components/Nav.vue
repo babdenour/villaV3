@@ -1,19 +1,18 @@
 <template>
   <div class="menu">
-    <!-- <img
-      @click="resetAll()"
-      :class="navFl === -1 ? 'isActive' : ''"
-      src="../../public/logo.svg"
-      alt="theoreme editions"
-    /> -->
-    <h1 class="menu__title"  @click="resetAll()" :class="navFl === -1 ? 'isActive' : ''">
-      <router-link to="/"> THEOREME</router-link>
-    </h1>
+    <router-link to="/">
+      <img
+        @click="resetAll()"
+        class="logo"
+        src="../../public/logo.png"
+        alt="theoreme editions"
+      />
+    </router-link>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
         <div
           class="menu__nav__nav_btn__button"
-          @click="switchFloor()"
+          @click="switchFloor(0)"
           :class="furn != 9 ? 'isActive' : ''"
         >
           {{ floor }}
@@ -68,6 +67,9 @@ export default {
       return this.getFloor();
     },
   },
+  watch: {
+    floor: "getFloor",
+  },
 
   methods: {
     getFloor: () => {
@@ -91,16 +93,16 @@ export default {
 
     switchFloor: (floorSelected) => {
       const { currentFloor } = store.state;
-      floorSelected = floorSelected  || currentFloor;
+      floorSelected = floorSelected || currentFloor;
 
-      console.log("ouaiii", floorSelected)
+      console.log("ouaiii", floorSelected);
 
       if (floorSelected === 9) {
         store.dispatch("setCurrentFloor", 0);
         store.dispatch("setTimeIndex", 0);
       }
 
-      (0 < floorSelected && floorSelected <= 4) ?  floorSelected -= 1 : floorSelected;
+      0 < floorSelected && floorSelected <= 4 ? (floorSelected -= 1) : floorSelected;
 
       store.dispatch("setCurrentFloor", floorSelected);
       store.dispatch("setTimeIndex", 0);
@@ -114,7 +116,6 @@ export default {
     },
 
     resetAll: () => {
-      // store.dispatch("setCurrentFloor", -2);
       store.dispatch("setCurrentFloor", 0);
       store.dispatch("setTimeIndex", 0);
       scrollToTop();
@@ -124,6 +125,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.logo {
+  padding-top: 3px;
+  width: 97%;
+}
 .menu {
   position: fixed;
   top: 0;
@@ -132,7 +137,7 @@ export default {
 
   &__nav {
     background-color: white;
-    margin-bottom: 0.5rem;
+    margin-top: 1rem;
     &__nav_btn {
       margin: 0.2rem 0;
       display: flex;

@@ -36,7 +36,7 @@ const imagesList = [
     path: 'assets/images/GF-01.jpg',
     text: '1st Floor | 12:21pm | Decembermber 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1221',
@@ -45,7 +45,7 @@ const imagesList = [
     path: 'assets/images/GF-02.jpg',
     text: '1st Floor | 12:21pm | Decembermber 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1221',
@@ -54,7 +54,7 @@ const imagesList = [
     path: 'assets/images/1F-03.jpg',
     text: '1st Floor | 12:21pm | Decembermber 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1300',
@@ -63,7 +63,7 @@ const imagesList = [
     path: 'assets/images/2F-00.jpg',
     text: '2nd Floor | 1:00pm | December 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -72,7 +72,7 @@ const imagesList = [
     path: 'assets/images/2F-00s.jpg',
     text: '2nd Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1700',
@@ -81,7 +81,7 @@ const imagesList = [
     path: 'assets/images/2F-01.jpg',
     text: '2nd Floor | 5:00pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '1230',
@@ -90,7 +90,7 @@ const imagesList = [
     path: 'assets/images/2F-01bx.jpg',
     text: '2nd Floor | 12:30pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1710',
@@ -99,7 +99,7 @@ const imagesList = [
     path: 'assets/images/2F-02.jpg',
     text: '2nd Floor | 5:10pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '1300',
@@ -108,7 +108,7 @@ const imagesList = [
     path: 'assets/images/2F-02bx.jpg',
     text: '2nd Floor | 1:00pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -117,7 +117,7 @@ const imagesList = [
     path: 'assets/images/2F-02s.jpg',
     text: '2nd Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1400',
@@ -126,7 +126,7 @@ const imagesList = [
     path: 'assets/images/2F-03.jpg',
     text: '2nd Floor | 2:00pm | December 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1300',
@@ -135,7 +135,7 @@ const imagesList = [
     path: 'assets/images/2F-04.jpg',
     text: '2nd Floor | 1:00pm | December 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -144,7 +144,7 @@ const imagesList = [
     path: 'assets/images/2F-04s.jpg',
     text: '2nd Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1300',
@@ -153,7 +153,7 @@ const imagesList = [
     path: 'assets/images/2F-05.jpg',
     text: '2nd Floor | 1:00pm | December 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -162,7 +162,7 @@ const imagesList = [
     path: 'assets/images/2F-05s.jpg',
     text: '2nd Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1700',
@@ -171,7 +171,7 @@ const imagesList = [
     path: 'assets/images/2F-06.jpg',
     text: '2nd Floor | 5:00pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '1300',
@@ -180,7 +180,7 @@ const imagesList = [
     path: 'assets/images/2F-07.jpg',
     text: '2nd Floor | 1:00pm | December 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1040',
@@ -189,7 +189,7 @@ const imagesList = [
     path: 'assets/images/2F-08.jpg',
     text: '2nd Floor | 10:40am | December 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1710',
@@ -198,7 +198,7 @@ const imagesList = [
     path: 'assets/images/2.5F-01.jpg',
     text: 'Floor | 5:10pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '1430',
@@ -207,7 +207,7 @@ const imagesList = [
     path: 'assets/images/2.5F-02.jpg',
     text: 'Floor | 2:30pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -216,7 +216,7 @@ const imagesList = [
     path: 'assets/images/2.5F-03.jpg',
     text: 'Floor | 8:00pm | June Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1300',
@@ -225,7 +225,7 @@ const imagesList = [
     path: 'assets/images/3F-00.jpg',
     text: '3rd Floor | 1:00pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -234,7 +234,7 @@ const imagesList = [
     path: 'assets/images/3F-00s.jpg',
     text: '3rd Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1300',
@@ -243,7 +243,7 @@ const imagesList = [
     path: 'assets/images/3F-01.jpg',
     text: '3rd Floor | 1:00pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -252,7 +252,7 @@ const imagesList = [
     path: 'assets/images/3F-01s.jpg',
     text: '3rd Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1330',
@@ -261,7 +261,7 @@ const imagesList = [
     path: 'assets/images/3F-02.jpg',
     text: '3rd Floor | 1:30pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1600',
@@ -270,7 +270,7 @@ const imagesList = [
     path: 'assets/images/3F-03.jpg',
     text: '3rd Floor | 4:00pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -279,7 +279,7 @@ const imagesList = [
     path: 'assets/images/3F-03s.jpg',
     text: '3rd Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1330',
@@ -288,7 +288,7 @@ const imagesList = [
     path: 'assets/images/3F-04.jpg',
     text: '3rd Floor | 13:30pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '1700',
@@ -297,7 +297,7 @@ const imagesList = [
     path: 'assets/images/3F-04bx.jpg',
     text: '3rd Floor | 5:00pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '2000',
@@ -306,7 +306,7 @@ const imagesList = [
     path: 'assets/images/3F-04s.jpg',
     text: '3rd Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1700',
@@ -315,7 +315,7 @@ const imagesList = [
     path: 'assets/images/3F-05.jpg',
     text: '3rd Floor | 5:00pm | June 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '1700',
@@ -324,7 +324,7 @@ const imagesList = [
     path: 'assets/images/3F-06.jpg',
     text: '3rd Floor | 5:00pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '1715',
@@ -333,7 +333,7 @@ const imagesList = [
     path: 'assets/images/4F-01.jpg',
     text: '4th Floor | 5:15 | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '2000',
@@ -342,7 +342,7 @@ const imagesList = [
     path: 'assets/images/4F-01s.jpg',
     text: '4th Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1630',
@@ -351,7 +351,7 @@ const imagesList = [
     path: 'assets/images/4F-02.jpg',
     text: '4th Floor | 4:30pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '1700',
@@ -360,7 +360,7 @@ const imagesList = [
     path: 'assets/images/4F-02bx.jpg',
     text: '4th Floor | 5:00pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '2000',
@@ -369,7 +369,7 @@ const imagesList = [
     path: 'assets/images/4F-02s.jpg',
     text: '4th Floor | 8:00pm | Virtualisation',
     time: 'night',
-    timeIndex: 4,
+    timeIndex: 3,
   },
   {
     desc: '1700',
@@ -378,7 +378,7 @@ const imagesList = [
     path: 'assets/images/4F-03.jpg',
     text: '4th Floor | 5:00pm | December 21st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
   {
     desc: '1430',
@@ -387,7 +387,7 @@ const imagesList = [
     path: 'assets/images/4F-04.jpg',
     text: '4th Floor | 2:30pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '2000',
@@ -405,7 +405,7 @@ const imagesList = [
     path: 'assets/images/4F-05.jpg',
     text: '4th Floor | 2:30pm | June 21st',
     time: 'noon',
-    timeIndex: 2,
+    timeIndex: 1,
   },
   {
     desc: '800',
@@ -414,7 +414,7 @@ const imagesList = [
     path: 'assets/images/GF-01.jpg',
     text: 'Ground Floor | 8:00am | June 21st',
     time: 'morning',
-    timeIndex: 1,
+    timeIndex: 0,
   },
   {
     desc: '800',
@@ -423,7 +423,7 @@ const imagesList = [
     path: 'assets/images/GF-02.jpg',
     text: 'Ground Floor | 8:00am | June 21st',
     time: 'morning',
-    timeIndex: 1,
+    timeIndex: 0,
   },
   {
     desc: '1655',
@@ -432,7 +432,7 @@ const imagesList = [
     path: 'assets/images/GF-03.jpg',
     text: 'Ground Floor | 4:55pm | January 15st',
     time: 'afternoon',
-    timeIndex: 3,
+    timeIndex: 2,
   },
 ];
 export default imagesList;
