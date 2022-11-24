@@ -1,51 +1,58 @@
 <template>
-  <div
-    class="img_desc"
-    :data-desc="desc"
-    :data-fl="floorLocation"
-    :data-link="link"
-    :data-name="name"
-    :data-path="path"
-    :data-text="text"
-    :data-tm="time"
-  >
-    <img :alt="name" :src="require(`@/${path}`)" />
-    <div v-if="time" class="img_desc__desc stack">
-      <span style="--index: 0">{{text}}</span>
-      <span style="--index: 1">{{text}}</span>
-      <span style="--index: 2">{{text}}</span>
-    </div>
-    <div v-if="time === undefined" class="img_desc__furnitures stack">
-      <span style="--index: 0">{{desc}} | {{ name }}</span>
-      <span style="--index: 1">{{desc}} | {{ name }}</span>
-      <span style="--index: 2">{{desc}} | {{ name }}</span>
-    </div>
+  <div class="img_desc">
+    <v-carousel height="100%" :show-arrows="false" hide-delimiters>
+      <v-carousel-item v-for="(item, i) in list" :key="i" cover class="carousel">
+        <v-img
+          :src="item?.src"
+          min-width="100%"
+          max-width="100%"
+          max-height="100vh"
+          class="mr-auto"
+          absolute
+        ></v-img>
+        <div class="img_desc__desc stack" v-if="type !== 9">
+          <span style="--index: 0">{{ list[i]?.text }}</span>
+          <span style="--index: 1">{{ list[i]?.text }}</span>
+          <span style="--index: 2">{{ list[i]?.text }}</span>
+        </div>
+        <div class="img_desc__furnitures stack" v-if="type === 9">
+          <span style="--index: 0">{{ list[i]?.desc }} | {{ list[i]?.name }}</span>
+          <span style="--index: 1">{{ list[i]?.desc }} | {{ list[i]?.name }}</span>
+          <span style="--index: 2">{{ list[i]?.desc }} | {{ list[i]?.name }}</span>
+        </div>
+      </v-carousel-item>
+    </v-carousel>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .img_desc {
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  width: 25%;
 
-  img {
-    width: 100%;
-    height: 100%;
+  .carousel {
+    width: 45%;
   }
-
   &__desc {
+    // position: relative;
+    // bottom: -100%;
+    z-index: 99;
+    // background-color: gray;
+
     text-align: center;
-    padding: 0.7vw;
-    margin-top: 0.2vw;
+    // padding: 0.7vw;
+    // margin-top: 0.2vw;
     color: var(--color);
-    --stacks: 3
+    // background-color: white;
+    --stacks: 3;
   }
 
-   &__furnitures {
-    margin-top: 0.2vw;
+  &__furnitures {
+    // margin-top: 0.2vw;
     color: var(--color);
-    height: fit-content;
-    --stacks: 3
+    min-height: fit-content;
+    --stacks: 3;
+    padding: 15px;
   }
   .stack {
     display: grid;
@@ -110,34 +117,54 @@
   }
 }
 
-@media screen and (min-width: 1020px) {
+@media screen and (max-width: 1020px) {
   .img_desc {
-    &__desc {
-      height: fit-content;
-    }
-  }
-
-  span {
-    font-size: 1.3vw;
-  }
-
-  .stack {
-    margin-bottom: 3vw;
+    width: 100%;
   }
 }
+// @media screen and (min-width: 1020px) {
+//   .img_desc {
+//     margin-top: 30%;
+
+//     &__desc {
+//       height: fit-content;
+//     }
+//   }
+
+//   span {
+//     font-size: 1.3vw;
+//   }
+
+//   .stack {
+//     margin-bottom: 3vw;
+//   }
+// }
 </style>
 
 <script>
+import store from "../store/index";
 export default {
   name: "ShowContent",
-  props: {
-    desc: String,
-    floorLocation: String,
-    link: String,
-    name: String,
-    path: String,
-    text: String,
-    time: String,
+  props: ["type"],
+  store,
+  data() {
+    return {};
+  },
+  computed: {
+    list() {
+      return this.getList();
+    },
+  },
+  watch: {
+    list: "getList",
+  },
+  methods: {
+    getList: () => {
+      return store.getters.getlistImg;
+    },
+  },
+  updated() {
+    this.getList();
   },
 };
 </script>

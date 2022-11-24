@@ -1,10 +1,18 @@
 <template>
   <div class="menu">
-    <router-link to="/">
+    <router-link
+      to="/"
+      style="
+        display: flex;
+        flex-direction: column;
+        place-content: center;
+        place-items: center;
+      "
+    >
       <img
         @click="resetAll()"
         class="logo"
-        src="../../public/logo.png"
+        :src="require('../../public/logo.png')"
         alt="theoreme editions"
       />
     </router-link>
@@ -25,13 +33,13 @@
           furniture
         </div>
         <router-link style="opacity: 0.5" to="/about" id="about">About</router-link>
-        <a
+        <!-- <a
           :href="linkUrl"
           target="_blank"
           id="info"
           :class="linkUrl === undefined && furn !== 9 ? 'infoD' : 'info'"
           >get info</a
-        >
+        > -->
       </div>
     </div>
   </div>
@@ -39,6 +47,7 @@
 
 <script>
 import store from "../store/index";
+
 function scrollToTop() {
   document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
 }
@@ -51,17 +60,17 @@ export default {
   },
 
   computed: {
-    navFl() {
-      return store.getters.getNavHl?.fl;
-    },
-    navTm() {
-      return store.getters.getNavHl?.time;
-    },
+    // navFl() {
+    //   return store.getters.getNavHl?.fl;
+    // },
+    // navTm() {
+    //   return store.getters.getNavHl?.time;
+    // },
+    // linkUrl() {
+    //   return store.getters.getNavHl?.link;
+    // },
     furn() {
       return store.getters.getCurrentFloor;
-    },
-    linkUrl() {
-      return store.getters.getNavHl?.link;
     },
     floor() {
       return this.getFloor();
@@ -73,8 +82,8 @@ export default {
 
   methods: {
     getFloor: () => {
-      const { navHl } = store.state;
-      const currFl = navHl.fl;
+      const { currentFloor } = store.state;
+      const currFl = currentFloor;
       let floorName = "Floors";
 
       if (currFl === 0) {
@@ -104,37 +113,38 @@ export default {
 
       store.dispatch("setCurrentFloor", floorSelected);
       store.dispatch("setTimeIndex", 0);
-      scrollToTop();
+      // scrollToTop();
     },
 
     switchTime: (timeIndex) => {
       store.dispatch("setCurrentFloor", 0);
       store.dispatch("setTimeIndex", timeIndex);
-      scrollToTop();
+      // scrollToTop();
     },
 
     resetAll: () => {
       store.dispatch("setCurrentFloor", 0);
       store.dispatch("setTimeIndex", 0);
-      scrollToTop();
+      // scrollToTop();
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.logo {
-  padding-top: 3px;
-  width: 97%;
-}
 .menu {
-  position: fixed;
-  top: 0;
   width: 100%;
-  z-index: 2;
-
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  text-align: center;
+  // place-items: center;
+  .logo {
+    padding: 3px;
+    width: 100%;
+  }
   &__nav {
-    background-color: white;
+    // background-color: white;
     margin-top: 1rem;
     &__nav_btn {
       margin: 0.2rem 0;
@@ -180,33 +190,33 @@ h1 {
   color: black;
 }
 
-@media only screen and (min-width: 575px) {
-  .menu {
-    width: 46%;
-    left: 27%;
-    right: 27%;
-    font-size: 2vh;
+// @media only screen and (min-width: 575px) {
+//   .menu {
+//     // width: 46%;
+//     // left: 27%;
+//     // right: 27%;
+//     font-size: 2vh;
 
-    &__nav {
-      margin: 1rem;
-    }
-  }
-}
+//     &__nav {
+//       margin: 1rem;
+//     }
+//   }
+// }
 
-@media only screen and (min-width: 1500px) {
-  .menu {
-    width: 40%;
-    left: 30%;
-    right: 30%;
-    font-size: 2vh;
-    margin-top: -1vw;
-    h1 {
-      margin: -1vw 0;
-    }
-    &__nav {
-      margin: 0vw 0 0 3vw;
-      padding: -1vw;
-    }
-  }
-}
+// @media only screen and (min-width: 1500px) {
+//   .menu {
+//     // width: 40%;
+//     // left: 30%;
+//     // right: 30%;
+//     font-size: 2vh;
+
+//     h1 {
+//       margin: -1vw 0;
+//     }
+//     &__nav {
+//       margin: 0vw 0 0 3vw;
+//       // padding: -1vw;
+//     }
+//   }
+// }
 </style>

@@ -142,14 +142,15 @@ export default {
   place-items: center;
   justify-content: space-between;
   z-index: 1;
-  width: 98%;
+  width: 100%;
   height: 100%;
-  padding: 3px;
+  // padding: 3px;
   // position: absolute;
   // top: 20%;
 
   &__logo {
-    width: 98%;
+    width: 100%;
+    padding: 3px;
   }
   &__text {
     width: 95%;

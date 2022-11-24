@@ -16,13 +16,14 @@
   src: url("../src/assets/fonts/Village.ttf") format("ttf");
 }
 
-// html {
-  // overflow: hidden;
-// }
+html {
+  overflow: hidden;
+}
 
 body {
   margin: 0;
   padding: 0;
+
 }
 
 #app {
@@ -34,18 +35,21 @@ body {
   font-weight: 500;
   font-size: 1rem;
   padding-bottom: 1rem;
+  width: 100vw;
+  height: 100vh;
+  // overflow-x: hidden;
 }
 
-@media screen and (min-width: 575px) {
-  body {
-    position: absolute;
-    width: 50%;
-    left: 25%;
-    right: 25%;
-  }
-}
+// @media screen and (min-width: 575px) {
+//   body {
+//     position: absolute;
+//     width: 50%;
+//     left: 25%;
+//     right: 25%;
+//   }
+// }
 
-a {
+a, router-link {
   text-decoration: none;
   color: #2c3e50;
 }

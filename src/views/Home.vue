@@ -1,121 +1,69 @@
 <template>
-  <div>
-    <Nav />
-    <div class="home snapping" name="home">
-      <div id="top"></div>
-      <!-- v-for="i in list" -->
-      <!-- <ShowContent
-        v-if="floor !== 9"
-        class="home__container"
-        :key="list[1]?.index"
-        :desc="list[1]?.desc"
-        :floorLocation="list[1]?.floorLocation"
-        :link="list[1]?.link"
-        :name="list[1]?.name"
-        :path="list[1]?.path"
-        :text="list[1]?.text"
-        :time="list[1]?.time"
-      /> -->
-      <v-carousel :show-arrows="false" hide-delimiters v-if="floor !== 9">
-        <v-carousel-item
-          v-for="(item, i) in list"
-          :key="i"
-          :src="item?.path"
-          cover
-        ></v-carousel-item>
-      </v-carousel>
-      <!-- <ShowFurniture
-        v-if="floor === 9"
-        class="home__container"
-        :key="list[0]?.index"
-        :desc="list[0]?.desc"
-        :link="list[0]?.link"
-        :name="list[0]?.name"
-        :path="list[0]?.path"
-      /> -->
-      <v-carousel :show-arrows="false" hide-delimiters  v-if="floor === 9">
-        <v-carousel-item
-          v-for="(item, i) in items"
-          :key="i"
-          :src="item.src"
-          cover
-        ></v-carousel-item>
-      </v-carousel>
-      <!-- <div class="home__scroll_more" v-if="floor !== 9">
-      <div id="more_top" @click="callScrollTop()">go top</div>
-    </div> -->
+  <Nav />
+  <div class="home snapping" name="home">
+    <div id="top"></div>
+    <div class="home__container">
+      <ShowContent :type="floor" />
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.home {
-  z-index: 1;
-  width: 100%;
-  height: 80%;
-  position: absolute;
-  top: 20%;
+ .home {
+  // z-index: 1;
+  // width: 100%;
+  // height: 100%;
+  // position: absolute;
+  // top: 20%;
 
   &__container {
-    display: flex;
-    scroll-snap-align: start;
+    height: 100%;
+    // display: flex;
+    // flex-direction: column;
+    // scroll-snap-align: start;
   }
+ }
 
-  &__scroll_more {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: center;
+// .home::-webkit-scrollbar {
+//   display: none;
+// }
 
-    > #more_top {
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-    }
-  }
-}
+// .snapping {
+//   overflow-y: scroll;
+//   scroll-snap-type: y mandatory;
+// }
 
-.home::-webkit-scrollbar {
-  display: none;
-}
+// @media screen and (min-width: 575px) {
+//   .home {
+//     width: 40%;
+//     left: 27.5%;
+//     right: 27.5%;
+//   }
 
-.snapping {
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-}
+//   #furntiures {
+//     margin: -0.4vw 0 1vw 0;
+//     width: fit-content;
+//   }
+// }
 
-@media screen and (min-width: 575px) {
-  .home {
-    width: 40%;
-    left: 27.5%;
-    right: 27.5%;
-  }
+// @media screen and (min-width: 1500px) {
+//   .home {
+//     width: 35%;
+//     left: 32.5%;
+//     right: 32.5%;
+//     margin-top: -1.5vw;
+//   }
 
-  #furntiures {
-    margin: -0.4vw 0 1vw 0;
-    width: fit-content;
-  }
-}
-
-@media screen and (min-width: 1500px) {
-  .home {
-    width: 35%;
-    left: 32.5%;
-    right: 32.5%;
-    margin-top: -1.5vw;
-  }
-
-  #furntiures {
-    margin: -0.4vw 0 1vw 0;
-    width: fit-content;
-  }
-}
+//   #furntiures {
+//     margin: -0.4vw 0 1vw 0;
+//     width: fit-content;
+//   }
+// }
 </style>
 
 <script>
 // @ is an alias to /src
 import ShowContent from "../components/ShowContent.vue";
-import ShowFurniture from "../components/ShowFurniture.vue";
 import store from "../store/index";
 import dataImages from "../data/dataImages";
 import dataFurnitures from "../data/dataFurnitures";
@@ -218,18 +166,12 @@ function handleTouchMove(evt) {
     setTimeout(() => {
       scrollToTop();
     }, 300);
-    // setTimeout(() => {
-    //   getInfoFromElInView();
-    // }, 300);
   } else {
     /* down swipe */
     scrollToNextFloor("previous");
     setTimeout(() => {
       scrollToTop();
     }, 300);
-    // setTimeout(() => {
-    //   getInfoFromElInView();
-    // }, 300);
   }
   /* reset values */
   xDown = null;
@@ -280,26 +222,7 @@ export default {
   store,
   components: {
     ShowContent,
-    ShowFurniture,
     Nav,
-  },
-  data() {
-    return {
-      items: [
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-        },
-      ],
-    };
   },
   computed: {
     floor() {
@@ -317,62 +240,25 @@ export default {
     timeI: "displayImgList",
   },
   methods: {
-    // displayImgList: () => {
-    //   const { currentFloor, timeIndex } = store.state;
-    //   const result = [];
-
-    //   if (9 > currentFloor >= 0 && 4 > timeIndex >= 0) {
-    //     dataImages.find((el) => {
-    //       if (
-    //         parseFloat(el.floorLocation) === parseFloat(currentFloor) &&
-    //         timeIndex === el.timeIndex
-    //       )
-    //         result.push(el);
-    //     });
-    //     return result;
-    //   }
-    //   // if (timeIndex !== 0) {
-    //   //   dataImages.find((el) => {
-    //   //     if (timeIndex === el.timeIndex) result.push(el);
-    //   //   });
-    //   //   return result;
-    //   // }
-    //   if (currentFloor === 9) {
-    //     dataFurnitures.forEach((el) => result.push(el));
-    //     return result;
-    //   }
-    //   return [];
-    // },
     displayImgList: () => {
-      const { currentFloor, timeIndex } = store.state;
+      const { currentFloor } = store.state;
       const result = [];
 
-      if (currentFloor === 9) {
-        dataFurnitures.forEach((el) => result.push(el));
-        console.log("furnitures", result)
-        return result;
-      }
-      // if (9 > currentFloor >= 0 && 4 > timeIndex >= 0) {
-      //   dataImages.map((e) => {
-      //     if (
-      //       parseFloat(e.floorLocation) === parseFloat(currentFloor) &&
-      //       timeIndex === e.timeIndex
-      //     ) {
-      //       result.push(e);
-      //     }
-      //   });
-      // }
-      if (9 > currentFloor >= 0) {
+      if (4 >= currentFloor >= 0) {
         dataImages.map((e) => {
-          if (
-            parseFloat(e.floorLocation) === parseFloat(currentFloor)
-          ) {
-            result.push(e);
-          }
-        console.log("img", result)
+          if (parseFloat(e.floorLocation) === parseFloat(currentFloor)) result.push(e);
+          store.dispatch("setlistImg", result);
           return result;
         });
       }
+
+      if (currentFloor === 9) {
+        dataFurnitures.forEach((el) => result.push(el));
+        store.dispatch("setlistImg", result);
+        return result;
+      }
+
+      store.dispatch("setlistImg", result);
       return result;
     },
     callScrollTop: () => {
@@ -382,6 +268,9 @@ export default {
       callScrollTop();
       goToFurniture(9);
     },
+  },
+  mounted() {
+    this.displayImgList();
   },
 };
 </script>
