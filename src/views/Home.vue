@@ -1,64 +1,11 @@
 <template>
+  <div id="top"></div>
   <Nav />
-  <div class="home snapping" name="home">
-    <div id="top"></div>
-    <div class="home__container">
-      <ShowContent :type="floor" />
-    </div>
-  </div>
+  <!-- <br/> -->
+  <ShowContent :type="floor" />
 </template>
 
 <style lang="scss">
- .home {
-  // z-index: 1;
-  // width: 100%;
-  // height: 100%;
-  // position: absolute;
-  // top: 20%;
-
-  &__container {
-    height: 100%;
-    // display: flex;
-    // flex-direction: column;
-    // scroll-snap-align: start;
-  }
- }
-
-// .home::-webkit-scrollbar {
-//   display: none;
-// }
-
-// .snapping {
-//   overflow-y: scroll;
-//   scroll-snap-type: y mandatory;
-// }
-
-// @media screen and (min-width: 575px) {
-//   .home {
-//     width: 40%;
-//     left: 27.5%;
-//     right: 27.5%;
-//   }
-
-//   #furntiures {
-//     margin: -0.4vw 0 1vw 0;
-//     width: fit-content;
-//   }
-// }
-
-// @media screen and (min-width: 1500px) {
-//   .home {
-//     width: 35%;
-//     left: 32.5%;
-//     right: 32.5%;
-//     margin-top: -1.5vw;
-//   }
-
-//   #furntiures {
-//     margin: -0.4vw 0 1vw 0;
-//     width: fit-content;
-//   }
-// }
 </style>
 
 <script>

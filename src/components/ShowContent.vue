@@ -1,12 +1,11 @@
 <template>
   <div class="img_desc">
-    <v-carousel height="100%" :show-arrows="false" hide-delimiters>
+    <v-carousel height="100%" width="100%" :show-arrows="false" hide-delimiters>
       <v-carousel-item v-for="(item, i) in list" :key="i" cover class="carousel">
         <v-img
           :src="item?.src"
-          min-width="100%"
           max-width="100%"
-          max-height="100vh"
+          max-height="100%"
           class="mr-auto"
           absolute
         ></v-img>
@@ -28,31 +27,20 @@
 <style lang="scss" scoped>
 .img_desc {
   height: 100%;
-  width: 25%;
+  width: 50%;
 
-  .carousel {
-    width: 45%;
-  }
   &__desc {
-    // position: relative;
-    // bottom: -100%;
-    z-index: 99;
-    // background-color: gray;
-
     text-align: center;
-    // padding: 0.7vw;
-    // margin-top: 0.2vw;
     color: var(--color);
-    // background-color: white;
     --stacks: 3;
   }
 
   &__furnitures {
-    // margin-top: 0.2vw;
     color: var(--color);
     min-height: fit-content;
     --stacks: 3;
     padding: 15px;
+    width: 100%;
   }
   .stack {
     display: grid;
@@ -122,23 +110,6 @@
     width: 100%;
   }
 }
-// @media screen and (min-width: 1020px) {
-//   .img_desc {
-//     margin-top: 30%;
-
-//     &__desc {
-//       height: fit-content;
-//     }
-//   }
-
-//   span {
-//     font-size: 1.3vw;
-//   }
-
-//   .stack {
-//     margin-bottom: 3vw;
-//   }
-// }
 </style>
 
 <script>

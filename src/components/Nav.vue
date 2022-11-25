@@ -138,13 +138,11 @@ export default {
   flex-direction: column;
   place-content: center;
   text-align: center;
-  // place-items: center;
   .logo {
     padding: 3px;
     width: 100%;
   }
   &__nav {
-    // background-color: white;
     margin-top: 1rem;
     &__nav_btn {
       margin: 0.2rem 0;
@@ -190,33 +188,12 @@ h1 {
   color: black;
 }
 
-// @media only screen and (min-width: 575px) {
-//   .menu {
-//     // width: 46%;
-//     // left: 27%;
-//     // right: 27%;
-//     font-size: 2vh;
-
-//     &__nav {
-//       margin: 1rem;
-//     }
-//   }
-// }
-
-// @media only screen and (min-width: 1500px) {
-//   .menu {
-//     // width: 40%;
-//     // left: 30%;
-//     // right: 30%;
-//     font-size: 2vh;
-
-//     h1 {
-//       margin: -1vw 0;
-//     }
-//     &__nav {
-//       margin: 0vw 0 0 3vw;
-//       // padding: -1vw;
-//     }
-//   }
-// }
+@media only screen and (min-width: 1020px) {
+  .menu {
+    margin-bottom: 2rem;
+    &__nav {
+      margin-top: 2rem;
+    }
+  }
+}
 </style>

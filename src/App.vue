@@ -23,7 +23,9 @@ html {
 body {
   margin: 0;
   padding: 0;
-
+  display: flex;
+  flex-direction: column;
+  place-items: center;
 }
 
 #app {
@@ -35,21 +37,22 @@ body {
   font-weight: 500;
   font-size: 1rem;
   padding-bottom: 1rem;
-  width: 100vw;
+  width: 50vw;
   height: 100vh;
-  // overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
 }
 
-// @media screen and (min-width: 575px) {
-//   body {
-//     position: absolute;
-//     width: 50%;
-//     left: 25%;
-//     right: 25%;
-//   }
-// }
+@media screen and (max-width: 1020px) {
+  #app {
+    width: 100vw;
+    height: 100vh;
+  }
+}
 
-a, router-link {
+a,
+router-link {
   text-decoration: none;
   color: #2c3e50;
 }
