@@ -151,6 +151,25 @@ const getInfoFromElInView = () => {
   return dataFormImage;
 };
 
+const doScroll = function(e) {
+  const deltaX = Math.max(-1, Math.min(1, e.deltaX));
+  const deltaY = Math.max(-1, Math.min(1, e.deltaY));
+
+  // Do something with `delta`
+  // const elmId = `#x${deltaX}y${deltaY}`;
+  // document.querySelector("#info").innerHTML = `x:${e.deltaX} y:${e.deltaY}`;
+  // document.querySelector(elmId).className = "scrolled";
+  console.log(deltaX, deltaY)
+  // window.setTimeout(id => document.querySelector(id).className = "", 0, elmId);
+
+  // e.preventDefault();
+};
+
+if (window.addEventListener) {
+  window.addEventListener("wheel", doScroll, false);
+}
+
+
 (function () {
   setTimeout(() => {
     getInfoFromElInView();
