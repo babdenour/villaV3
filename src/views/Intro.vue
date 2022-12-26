@@ -1,22 +1,28 @@
 <script>
+import store from "../store/index";
+
 export default {
   name: "Intro",
+  store,
+  methods: {
+    goHome: () => {
+      store.dispatch("setCurrentFloor", 0);
+      store.dispatch("setTimeIndex", 0);
+    },
+  }
 };
 </script>
 
 <template>
   <div class="intro" name="intro">
-    <router-link
-      to="/home"
-      style="
+    <router-link @click="goHome()" to="/home" style="
         display: flex;
         flex-direction: column;
         place-content: center;
         place-items: center;
-      "
-    >
+      ">
       <img id="manifest-logo" src="../../public/logo.png" alt="manifeste" />
-      <br/>
+      <br />
       <div class="manifest-text">
         <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut perferendis minus
@@ -27,10 +33,8 @@ export default {
       <img id="manifest-illu" src="../assets/images/4F-04.jpg" alt="manifeste" />
     </router-link>
     <br />
-    <router-link to="/about"
-      >get more informations
-      <span style="color: blue; font-size: ">about</span> us</router-link
-    >
+    <router-link to="/about">get more informations
+      <span style="color: blue; font-size: ">about</span> us</router-link>
   </div>
 </template>
 
@@ -57,6 +61,7 @@ export default {
   text-align: center;
   width: 80%;
 }
+
 p,
 span {
   font-size: 1.8vh;

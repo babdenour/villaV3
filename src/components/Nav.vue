@@ -1,37 +1,19 @@
 <template>
   <div class="menu">
     <router-link to="/">
-      <img
-        @click="resetAll()"
-        class="logo"
-        src="../../public/logo.png"
-        alt="theoreme editions"
-      />
+      <img @click="switchFloor(-1)" class="logo" src="../../public/logo.png" alt="theoreme editions" />
     </router-link>
     <div class="menu__nav">
       <div class="menu__nav__nav_btn">
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchFloor(0)"
-          :class="furn != 9 ? 'isActive' : ''"
-        >
+        <div class="menu__nav__nav_btn__button" @click="switchFloor(0)" :class="furn != 9 ? 'isActive' : ''">
           {{ floor }}
         </div>
-        <div
-          class="menu__nav__nav_btn__button"
-          @click="switchFloor(9)"
-          :class="furn === 9 ? 'isActive' : ''"
-        >
+        <div class="menu__nav__nav_btn__button" @click="switchFloor(9)" :class="furn === 9 ? 'isActive' : ''">
           furniture
         </div>
-        <router-link style="opacity: 0.5" to="/about" id="about">About</router-link>
-        <a
-          :href="linkUrl"
-          target="_blank"
-          id="info"
-          :class="linkUrl === undefined && furn !== 9 ? 'infoD' : 'info'"
-          >get info</a
-        >
+        <router-link style="opacity: 0.5" to="/about" @click="switchFloor(-1)" id="about">About</router-link>
+        <a :href="linkUrl" target="_blank" id="info" :class="linkUrl === undefined && furn !== 9 ? 'infoD' : 'info'">get
+          info</a>
       </div>
     </div>
   </div>
@@ -127,6 +109,7 @@ export default {
   padding-top: 3px;
   width: 97%;
 }
+
 .menu {
   position: fixed;
   top: 0;
@@ -136,11 +119,13 @@ export default {
   &__nav {
     background-color: white;
     margin-top: 1rem;
+
     &__nav_btn {
       margin: 0.2rem 0;
       display: flex;
       flex-direction: row;
       text-align: left;
+
       &__button {
         margin-bottom: 0.3vw;
         margin-right: 0.55rem;
@@ -149,12 +134,14 @@ export default {
         width: fit-content;
         height: fit-content;
       }
+
       :active {
         background-color: yellow;
       }
     }
   }
 }
+
 .isActive {
   width: fit-content;
   height: fit-content;
@@ -171,6 +158,7 @@ h1 {
 .infoD {
   display: none;
 }
+
 .info {
   width: fit-content;
   font-size: 0.7rem;
@@ -200,9 +188,11 @@ h1 {
     right: 30%;
     font-size: 2vh;
     margin-top: -1vw;
+
     h1 {
       margin: -1vw 0;
     }
+
     &__nav {
       margin: 0vw 0 0 3vw;
       padding: -1vw;

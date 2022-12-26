@@ -1,55 +1,34 @@
 <template>
-  <div>
-    <Nav />
-    <div class="home snapping" name="home">
-      <div id="top"></div>
-      <!-- v-for="i in list" -->
-      <!-- <ShowContent
-        v-if="floor !== 9"
-        class="home__container"
-        :key="list[1]?.index"
-        :desc="list[1]?.desc"
-        :floorLocation="list[1]?.floorLocation"
-        :link="list[1]?.link"
-        :name="list[1]?.name"
-        :path="list[1]?.path"
-        :text="list[1]?.text"
-        :time="list[1]?.time"
-      /> -->
-      <v-carousel :show-arrows="false" hide-delimiters v-if="floor !== 9">
-        <v-carousel-item
-          v-for="(item, i) in list"
-          :key="i"
-          :src="item?.path"
-          cover
-        ></v-carousel-item>
-      </v-carousel>
-      <!-- <ShowFurniture
-        v-if="floor === 9"
-        class="home__container"
-        :key="list[0]?.index"
-        :desc="list[0]?.desc"
-        :link="list[0]?.link"
-        :name="list[0]?.name"
-        :path="list[0]?.path"
-      /> -->
-      <v-carousel :show-arrows="false" hide-delimiters  v-if="floor === 9">
-        <v-carousel-item
-          v-for="(item, i) in items"
-          :key="i"
-          :src="item.src"
-          cover
-        ></v-carousel-item>
-      </v-carousel>
-      <!-- <div class="home__scroll_more" v-if="floor !== 9">
+  <Nav />
+  <div id="top"></div>
+
+  <div class="home snapping" name="home">
+    <ShowContent v-if="floor !== 9" v-for="i in list" class="home__container" :key="i?.index" :desc="i?.desc"
+      :floorLocation="i?.floorLocation" :link="i?.link" :name="i?.name" :path="i?.path" :text="i?.text"
+      :time="i?.time" />
+  </div>
+  <div class="f snapping">
+    <ShowFurniture v-if="floor === 9" v-for="i in list" class="home__container" :key="i?.index" :desc="i?.desc"
+      :link="i?.link" :name="i?.name" :path="i?.path" />
+  </div>
+
+  <!-- <div class="home__scroll_more" v-if="floor !== 9">
       <div id="more_top" @click="callScrollTop()">go top</div>
     </div> -->
-    </div>
-  </div>
 </template>
 
 <style lang="scss">
+.f {
+  z-index: 1;
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  top: 20%;
+}
+
 .home {
+  display: flex;
+  flex-direction: row;
   z-index: 1;
   width: 100%;
   height: 80%;
@@ -57,31 +36,31 @@
   top: 20%;
 
   &__container {
-    display: flex;
     scroll-snap-align: start;
   }
 
-  &__scroll_more {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: center;
+  // &__scroll_more {
+  //   display: flex;
+  //   flex-direction: row;
+  //   align-items: baseline;
+  //   justify-content: center;
 
-    > #more_top {
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-    }
-  }
+  // >#more_top {
+  //   font-weight: bold;
+  //   font-size: 14px;
+  //   cursor: pointer;
+  // }
+  // }
 }
 
-.home::-webkit-scrollbar {
+.home::-webkit-scrollbar,
+.f::-webkit-scrollbar {
   display: none;
 }
 
 .snapping {
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
 }
 
 @media screen and (min-width: 575px) {
@@ -130,9 +109,11 @@ const swipeToTime = (swipe) => {
 
   if (currentFloor !== 9) {
     if (swipe === "right" && timeI < 4) {
+      console.log("right", timeI);
       timeI += 1;
       store.dispatch("setTimeIndex", timeI);
     } else if (swipe === "left" && timeI > 0) {
+      console.log("left", timeI);
       timeI -= 1;
       store.dispatch("setTimeIndex", timeI);
     }
@@ -144,6 +125,7 @@ const scrollToNextFloor = (scroll) => {
   let floor = currentFloor;
 
   if (currentFloor !== 9) {
+    store.dispatch("setTimeIndex", 0);
     if (scroll === "next" && currentFloor < 4) {
       floor += 1;
       store.dispatch("setCurrentFloor", floor);
@@ -154,12 +136,12 @@ const scrollToNextFloor = (scroll) => {
   }
 };
 
-const scrollToTop = () => {
-  document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
-  setTimeout(() => {
-    getInfoFromElInView();
-  }, 500);
-};
+// const scrollToTop = () => {
+//   document.querySelector("#top").scrollIntoView({ behavior: "smooth" });
+//   setTimeout(() => {
+//     getInfoFromElInView();
+//   }, 500);
+// };
 
 const goToFurniture = (floorSelected) => {
   store.dispatch("setTimeIndex", 0);
@@ -197,40 +179,45 @@ function handleTouchMove(evt) {
   const xDiff = xDown - xUp;
   const yDiff = yDown - yUp;
 
-  if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    /* most significant */
-    if (xDiff > 0) {
-      /* left swipe */
-      swipeToTime("right");
+  const { currentFloor } = store.state;
+
+  if (currentFloor >= 0) {
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      /* most significant */
+      if (xDiff > 0) {
+        /* left swipe */
+        swipeToTime("right");
+        setTimeout(() => {
+          getInfoFromElInView();
+        }, 300);
+      } else {
+        /* right swipe */
+        swipeToTime("left");
+        setTimeout(() => {
+          getInfoFromElInView();
+        }, 300);
+      }
+    } else if (yDiff > 0) {
+      /* up swipe */
+      scrollToNextFloor("next");
+      // setTimeout(() => {
+      //   scrollToTop();
+      // }, 300);
       setTimeout(() => {
         getInfoFromElInView();
       }, 300);
     } else {
-      /* right swipe */
-      swipeToTime("left");
+      /* down swipe */
+      scrollToNextFloor("previous");
+      // setTimeout(() => {
+      //   scrollToTop();
+      // }, 300);
       setTimeout(() => {
         getInfoFromElInView();
       }, 300);
     }
-  } else if (yDiff > 0) {
-    /* up swipe */
-    scrollToNextFloor("next");
-    setTimeout(() => {
-      scrollToTop();
-    }, 300);
-    // setTimeout(() => {
-    //   getInfoFromElInView();
-    // }, 300);
-  } else {
-    /* down swipe */
-    scrollToNextFloor("previous");
-    setTimeout(() => {
-      scrollToTop();
-    }, 300);
-    // setTimeout(() => {
-    //   getInfoFromElInView();
-    // }, 300);
   }
+
   /* reset values */
   xDown = null;
   yDown = null;
@@ -284,22 +271,7 @@ export default {
     Nav,
   },
   data() {
-    return {
-      items: [
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-        },
-      ],
-    };
+    return {};
   },
   computed: {
     floor() {
@@ -317,40 +289,21 @@ export default {
     timeI: "displayImgList",
   },
   methods: {
-    // displayImgList: () => {
-    //   const { currentFloor, timeIndex } = store.state;
-    //   const result = [];
-
-    //   if (9 > currentFloor >= 0 && 4 > timeIndex >= 0) {
-    //     dataImages.find((el) => {
-    //       if (
-    //         parseFloat(el.floorLocation) === parseFloat(currentFloor) &&
-    //         timeIndex === el.timeIndex
-    //       )
-    //         result.push(el);
-    //     });
-    //     return result;
-    //   }
-    //   // if (timeIndex !== 0) {
-    //   //   dataImages.find((el) => {
-    //   //     if (timeIndex === el.timeIndex) result.push(el);
-    //   //   });
-    //   //   return result;
-    //   // }
-    //   if (currentFloor === 9) {
-    //     dataFurnitures.forEach((el) => result.push(el));
-    //     return result;
-    //   }
-    //   return [];
-    // },
     displayImgList: () => {
       const { currentFloor, timeIndex } = store.state;
       const result = [];
 
       if (currentFloor === 9) {
         dataFurnitures.forEach((el) => result.push(el));
-        console.log("furnitures", result)
         return result;
+      }
+      if (9 > currentFloor >= 0) {
+        dataImages.forEach((e) => {
+          if (parseFloat(e.floorLocation) === parseFloat(currentFloor)) {
+            result.push(e);
+          }
+          return result;
+        });
       }
       // if (9 > currentFloor >= 0 && 4 > timeIndex >= 0) {
       //   dataImages.map((e) => {
@@ -362,26 +315,15 @@ export default {
       //     }
       //   });
       // }
-      if (9 > currentFloor >= 0) {
-        dataImages.map((e) => {
-          if (
-            parseFloat(e.floorLocation) === parseFloat(currentFloor)
-          ) {
-            result.push(e);
-          }
-        console.log("img", result)
-          return result;
-        });
-      }
       return result;
     },
-    callScrollTop: () => {
-      scrollToTop();
-    },
-    callGoToF: () => {
-      callScrollTop();
-      goToFurniture(9);
-    },
+    // callScrollTop: () => {
+    //   scrollToTop();
+    // },
+    // callGoToF: () => {
+    //   callScrollTop();
+    //   goToFurniture(9);
+    // },
   },
 };
 </script>
